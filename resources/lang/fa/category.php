@@ -1,0 +1,40 @@
+<?php
+return [
+    'id'          => 'ایدی',
+    'name'        => 'نام',
+    'keyword'     => 'کلمه کلیدی',
+    'description' => 'توضیحات',
+    'image'       => 'تصویر',
+    'parent'      => 'سردسته',
+    'top'         => 'نمایش وب سایت',
+    'status'      => 'وضعیت',
+    'sort'        => 'مرتب سازی',
+    'help_top'    => 'Display this category out site',
+    'admin'       => [
+        'title'           => 'مدریت دسته ها',
+        'create_success'  => 'دسته با موفقیت ایجاد شد',
+        'edit_success'    => 'دسته با موفقیت ویرایش شد.',
+        'list'            => 'لیست دسته ها',
+        'action'          => 'عملیات',
+        'delete'          => 'حذف',
+        'edit'            => 'ویرایش',
+        'add_new'         => 'دسته جدید',
+        'add_new_title'   => 'دسته جدید',
+        'add_new_des'     => 'ایجاد دسته جدید',
+        'export'          => 'برون سپاری',
+        'refresh'         => 'ریفرش',
+        'result_item'     => 'در حال نمایش <b>:item_from</b> تا <b>:item_to</b> از <b>:item_total</b> تا</b>',
+        'sort'            => 'دسته بندی',
+        'select_category' => 'انتخاب دسته',
+
+        'sort_order'      => [
+            'id_asc'    => 'ایدی صعودی',
+            'id_desc'   => 'ایدی نزولی',
+            'name_asc'  => 'نام صعودی',
+            'name_desc' => 'نام نزولی',
+        ],
+        'search'          => 'جست و جو',
+        'search_place'    => 'با نام یا شناسه جست و جو کنید.',
+    ],
+
+];

@@ -1,0 +1,23 @@
+/* ====================================>>
+    Theme Name: DigiKian
+	Theme URI: https://ashkankiani.ir/digikian
+	Author: Ashkan Kiani
+	Author URI: https://ashkankiani.ir/
+	Description: Premium Themes.
+	Version: 1.0
+	License: Private Public License
+	License URI: https://ashkankiani.ir/
+    Programmer and Back-End: Ashkan Kiani
+    Programmer Contact: http://www.ashkankiani.ir/ - 72kiany.ashkan@gmail.com - 09120143029
+====================================>> */
+@import "variables";
+@import "mixins";
+@import "constants";
+@import "master";
+@import "page/index";
+@import "page/content";
+@import "page/auth";
+@import "page/category";
+@import "page/sidebar";
+@import "page/cart";
+

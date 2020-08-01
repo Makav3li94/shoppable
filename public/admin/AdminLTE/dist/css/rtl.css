@@ -1,0 +1,79 @@
+body{
+    direction:rtl ;
+    text-align: right ;
+}
+
+.content-wrapper, .main-footer ,.main-header .navbar{
+    margin-right: 230px;
+    margin-left: 0;
+}
+.main-sidebar{
+    left: none;
+    right: 0;
+}
+
+.main-header .sidebar-toggle,.main-header .logo{
+    float: right;
+}
+.main-header .navbar-custom-menu, .main-header .navbar-right{
+    float: left;
+}
+.navbar-static-top .btn-group{
+    float: left;
+}
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .right-side, .sidebar-mini.sidebar-collapse .main-footer
+,.sidebar-mini.sidebar-collapse .main-header .navbar
+,.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .right-side, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header .navbar{
+    margin-right: 50px;
+    margin-left: 0!important;
+}
+.sidebar-menu > li > a{
+    padding: 12px 15px 12px 5px;
+}
+
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right), .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu{
+    left: none;
+    right: 50px;
+}
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container {
+    position: relative !important;
+    float: left;
+    width: auto !important;
+    right: 180px !important;
+    top: -22px !important;
+    z-index: 900;
+}
+.navbar-custom-menu > .navbar-nav > li > .dropdown-menu {
+    position: absolute;
+    left: 0;
+    right: auto;
+}
+
+
+.content-header > .breadcrumb {
+    float: left;
+    left: 10px;
+    right: auto;
+}
+.box-header > .box-tools{
+    left: 10px;
+    right: auto;
+}
+th {
+    text-align: right;
+}
+
+.pull-right {
+    float: left !important;
+}
+
+.pull-left {
+    float: right !important;
+}
+.col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9{
+    float: right;
+}
+
+.input-group-addon{
+    border: 1px solid #ccc!important;
+}

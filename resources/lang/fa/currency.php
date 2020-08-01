@@ -1,0 +1,45 @@
+<?php
+return [
+    'manager'       => 'مدیریت',
+    'code'          => 'کد پول',
+    'name'          => 'نام',
+    'symbol'        => 'نماد',
+    'precision'     => 'صحت',
+    'exchange_rate' => 'نرخ تبادل',
+    'thousands'     => 'جداکننده 3 صفر',
+    'status'        => 'وضعیت',
+    'sort'          => 'مرتب سازی',
+    'symbol_first'  => 'نماد اول',
+    'admin'         => [
+        'title'          => 'واحد پول',
+        'create_success' => 'واحد پول با موفقیت ساخته شد',
+        'edit_success'   => 'واحد پول با موفقیت ویرایش شد.',
+        'list'           => 'لیست واحدهای پول',
+        'id'             => 'ایدی',
+        'status'         => 'وضعیت',
+        'action'         => 'عملیات',
+        'delete'         => 'حذف',
+        'edit'           => 'ویرایش',
+        'add_new'        => 'مورد جدید',
+        'export'         => 'برونسپاری',
+        'refresh'        => 'بارگذاری مجدد',
+        'result_item'    => 'در حال نمایش <b>:item_from</b> تا <b>:item_to</b> از <b>:item_total</b> تا</b>',
+        'sort'           => 'مرتب سازی',
+        'search'         => 'جست و جو',
+        'add_new_title'  => 'Tạo tiền tệ',
+        'add_new_des'    => 'Tạo mới tiền tệ',
+
+        'search_place'   => 'Tìm tên hoặc code',
+        'choose_icon'    => 'انتخاب آیکن',
+
+
+        'sort_order'     => [
+            'id_asc'     => 'شناسه صعودی',
+            'id_desc'    => 'شناسه نزولی',
+            'name_asc'   => 'الفبا صعودی',
+            'name_desc'  => 'الفبا نزولی',
+            'email_asc'  => 'ایمیل صعودی',
+            'email_desc' => 'ایمیل نزولی',
+        ],
+    ],
+];

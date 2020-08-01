@@ -1,0 +1,442 @@
+/* ====================================>>
+    Sidebar
+    1. Sidebar Post
+    2. Sidebar Product
+   ====================================>> */
+
+/* ===== 1. Sidebar Post ===== */
+.sidebar-post {
+  position: sticky;
+  height: 100%;
+  top: 0;
+  .box-sidebar {
+    .title {
+      display: block;
+      text-align: right;
+      margin-bottom: 15px;
+      border-bottom: 1px solid $blue-color-light;
+      padding-bottom: 10px;
+      p{
+        @include user-select(none);
+        font-size: $font-normal - 4;
+        margin-bottom: 0;
+        font-weight: 500;
+        background-image: url("../../images/bg-dots.png");
+        background-position: center center;
+        span{
+          font-size: $font-normal + 2;
+          padding: 0 10px;
+          display: table;
+          background-color: #FFF;
+          margin: 0 auto;
+          text-align: center;
+        }
+      }
+    }
+    .related-post {
+      .item {
+        display: flex;
+        align-items: center;
+        img {
+          width: 60px;
+          height: 60px;
+          @include border(1px solid #eaeaea);
+          margin-left: 10px;
+        }
+        .content {
+          width: calc(100% - 70px);
+          h3 {
+            font-size: $font-normal - 1;
+            font-weight: normal;
+            line-height: 26px;
+            margin-bottom: 8px;
+            color: $primary-color-body;
+          }
+          p {
+            font-size: $font-normal - 1;
+            color: #959595;
+            margin-bottom: 0;
+            i {
+              font-size: $font-normal + 1;
+            }
+          }
+        }
+      }
+      & .item:not(:last-child) {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eaeaea;
+      }
+    }
+  }
+}
+
+/* ===== 2. Sidebar Category Product ===== */
+.sidebar-category-product {
+  position: sticky;
+  top: 0;
+  height: 100%;
+  .box-sidebar-product {
+    background-color: #fff;
+    @include box-shadow(0 12px 12px 0 hsla(0, 0%, 71%, .11));
+    @include border (1px solid #dedede);
+    .header {
+      display: block;
+      border-bottom: 1px solid #f2f2f2;
+      p {
+        padding: 10px 15px;
+        position: relative;
+        font-weight: 500;
+        margin-bottom: 0;
+        i {
+          font-size: 22px;
+          line-height: 15px;
+          position: absolute;
+          left: 10px;
+          top: 13px;
+          @include transition(all .5s ease-in-out);
+        }
+        &.collapsed {
+          i {
+            @include transform(rotate(-180deg));
+            @include transition(all .5s ease-in-out);
+          }
+        }
+      }
+    }
+    .body {
+      .filter-selected {
+        padding: 8px;
+        ul {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin: 0;
+          padding: 0;
+          li {
+            position: relative;
+            @include border(1px solid #ccc);
+            @include border-radius(8px);
+            list-style: none;
+            margin: 3px;
+            padding: 2px 4px 2px 20px;
+            color: $primary-color-body;
+            font-size: $font-normal - 2;
+            font-weight: 300;
+            line-height: normal;
+            word-spacing: 1px;
+            i {
+              cursor: pointer;
+              position: absolute;
+              left: -3px;
+              top: -2px;
+              font-size: $font-normal + 2;
+              padding: 5px;
+            }
+          }
+        }
+      }
+      .list-category {
+        overflow: hidden;
+        padding: 8px;
+        min-height: 160px;
+        max-height: 160px;
+        ul {
+          display: block;
+          margin: 0 8px 8px 0;
+          padding: 0;
+          li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            a {
+              display: block;
+              line-height: 28px;
+              font-size: $font-normal - 1;
+              font-weight: normal;
+              color: $primary-color-body;
+              &::before {
+                content: '\f141';
+                font-family: "Material Design Icons";
+                vertical-align: middle;
+              }
+            }
+            > ul {
+              > li {
+                > a {
+                  font-weight: 300;
+                }
+                > ul {
+                  > li {
+                    > a {
+                      font-weight: 200;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.active {
+          max-height: 100%;
+        }
+      }
+      .search {
+        padding: 8px;
+        position: relative;
+        svg {
+          position: absolute;
+          right: 15px;
+          top: 15px;
+        }
+        input {
+          background-color: #f8f8f8;
+          font-size: $font-normal - 2;
+          color: $primary-color-body;
+          padding: 0.52rem 2rem 0.52rem 0.5rem;
+          &::placeholder {
+            text-align: right;
+            color: #959595;
+            font-size: $font-normal - 3;
+          }
+        }
+      }
+      .search-brand {
+        padding: 8px;
+        position: relative;
+        border-bottom: 1px solid #f2f2f2;
+        svg {
+          position: absolute;
+          right: 15px;
+          top: 15px;
+        }
+        input {
+          border-color: $blue-color-light;
+          font-size: $font-normal - 2;
+          color: $primary-color-body;
+          padding: 0.52rem 2rem 0.52rem 0.5rem;
+          &::placeholder {
+            text-align: right;
+            color: #959595;
+            font-size: $font-normal - 3;
+          }
+        }
+      }
+      .select-filter {
+        ul {
+          max-height: 300px;
+          overflow-y: auto;
+          display: block;
+          margin: 0 8px 0 0;
+          padding: 0;
+          li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            a {
+              position: relative;
+              display: flex;
+              align-items: center;
+              line-height: 28px;
+              font-size: $font-normal - 1;
+              font-weight: normal;
+              color: $primary-color-body;
+              cursor: pointer;
+              @include user-select(none);
+              &::before {
+                font-family: "Material Design Icons";
+                content: '\f131';
+                font-size: 25px;
+                display: inline-flex;
+                color: #d7d8d9;
+                margin-left: 5px;
+              }
+              .name {
+                position: absolute;
+                left: 8px;
+                top: 1px;
+                font-size: $font-normal - 4;
+                font-weight: 300;
+                text-transform: capitalize;
+                color: #a6a6a6;
+                text-align: left;
+                max-width: 110px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                direction: ltr;
+                padding-right: 10px;
+              }
+              .show-color{
+                position: absolute;
+                left: 16px;
+                top: 8px;
+                text-align: left;
+                width: 10px;
+                height: 10px;
+                @include border-radius(50%);
+              }
+            }
+            &.active {
+              a {
+                &::before {
+                  content: '\f132';
+                  color: $blue-color-light;
+                }
+              }
+            }
+          }
+        }
+      }
+      .available {
+        padding: 8px;
+        p {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0;
+          font-size: $font-normal - 2;
+          font-weight: normal;
+          color: #8c8c8c;
+          @include user-select(none);
+          i {
+            font-size: 28px;
+            margin-left: 5px;
+            line-height: 20px;
+            background-color: #e5e5e5;
+            @include border-radius(15px);
+            @include border(1px solid #8c8c8c);
+            padding-right: 8px;
+            padding-left: 8px;
+            color: #FFF;
+            cursor: pointer;
+          }
+        }
+        &.active {
+          p {
+            cursor: default;
+            color: $primary-color-body;
+            i {
+              background-color: $blue-color-light;
+              &::before {
+                content: "\F522";
+              }
+            }
+          }
+        }
+      }
+      .range-price {
+        position: relative;
+        border-bottom: 1px solid #f2f2f2;
+        padding: 15px 20px;
+      }
+      .value-range-price {
+        display: flex;
+        .right {
+          border-left: 1px solid #f2f2f2;
+        }
+        .right, .left {
+          padding: 10px;
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex-grow: 1;
+          span {
+            font-size: $font-normal - 1;
+            color: $primary-color-body;
+          }
+          div {
+            text-align: center;
+            margin: 8px 0;
+            padding: 6px 4px 2px;
+            background-color: #f8f8f8;
+            min-width: 82px;
+            color: $primary-color-body;
+            @include border-radius(3px);
+            @include user-select(none);
+          }
+        }
+
+      }
+    }
+    .footer {
+      border-top: 1px solid #f2f2f2;
+      background-color: #fcfcfc;
+      text-align: center;
+      p {
+        padding: 10px 0;
+        cursor: pointer;
+        margin-bottom: 0;
+        font-size: $font-normal - 2;
+        font-weight: normal;
+        @include user-select(none);
+      }
+      .apply-filter {
+        font-weight: normal;
+        display: inline-block;
+        margin: 8px auto;
+        background-color: $color-primary-1;
+        border-color: $color-primary-4;
+        @include border-radius(7px);
+        padding: 4px 10px;
+        color: #FFF;
+        font-size: $font-normal - 1;
+        clear: both;
+        i {
+          font-size: 24px;
+        }
+      }
+    }
+    &.brand{
+      background-image: url("../../images/bg-brand.svg");
+      min-height: 214px;
+      background-size: 110%;
+      background-position: center center;
+      padding: 5px;
+      .body{
+        .box-brand{
+          display: table;
+          margin: 12px auto;
+          padding: 5px;
+          @include border(1px solid #ebebeb);
+          @include border-radius(15px);
+          @include box-shadow(0 0 12px 0 rgba(0,0,0,.08));
+          background-color: #fff;
+          overflow: hidden;
+          .thumb{
+            width: 145px;
+            height: 145px;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            background-color: #fff;
+            background-size: contain;
+          }
+        }
+        h1{
+          font-size: $font-normal + 4;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        a{
+          font-size: $font-normal - 3;
+          display: block;
+          line-height: 22px;
+          text-align: left;
+          direction: ltr;
+          color: #ababab;
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  & .box-sidebar-product:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+
+
