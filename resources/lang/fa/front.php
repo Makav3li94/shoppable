@@ -55,7 +55,7 @@ return [
 	'join_new_letter'    => 'عضویت به نامه',
 	'products_hot'       => 'محصولات آتشین',
 	'products_special'   => 'محصولات ویژه',
-	'products_last_view' => 'آخرین بازدید محصول',
+	'products_last_view' => 'پیشنهاد لحظه ای برای شما',
 	'products_build'     => 'ساخت محصول',
 	'products_group'     => 'گروه محصولات',
 	'free_shipping'      => 'ارسال رایگان',

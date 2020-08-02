@@ -3,7 +3,7 @@
 @endphp
 @if (!empty($banners))
     <!--Slider Home-->
-    <div class="col-12 slider-home p-0 mb-3">
+    <div class="col-12 slider-home p-0 mb-3" >
         <div class="slick-slider-home cart-shadow-radius">
             @foreach ($banners as $key => $banner)
                 <a href="{{ route('banner.click',['id' => $banner->id]) }}" class="cart-shadow-radius"

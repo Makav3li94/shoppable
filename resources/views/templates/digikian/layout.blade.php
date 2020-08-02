@@ -2,8 +2,8 @@
 @include($templatePath . '.maintenance')
 @else
 
-        <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" dir="rtl">
 
 <head>
     <meta charset="utf-8">
@@ -51,7 +51,7 @@
           href="{{ asset($templateFile.'/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ asset($templateFile.'/asset/css/style.css')}}">
 @stack('styles')
-<body style="direction: rtl">
+<body>
 
 @include($templatePath.'.header')
 <main class="main-content pt-3 pb-3 pb-md-5">

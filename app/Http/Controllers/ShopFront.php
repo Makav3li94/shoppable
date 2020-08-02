@@ -12,6 +12,7 @@ use App\Models\ShopNews;
 use App\Models\ShopPage;
 use App\Models\ShopSubscribe;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class ShopFront extends GeneralController
 {
@@ -25,7 +26,14 @@ class ShopFront extends GeneralController
      */
     public function index()
     {
-        return view($this->templatePath . '.screen.shop_home',
+        (new ShopCategory)->start()->getList(['status' => 1]);
+        $lang = app()->getLocale();
+
+        $categories = ShopCategory::whereHas('descriptions',function ($q) use ($lang){
+            $q->where('lang',$lang);
+        })->where([['parent',0],['status',1]])->orderBy('sort','desc')->get();
+
+        return view($this->templatePath . '.screen.shop_home',compact('categories'),
             array(
                 'title' => sc_store('title'),
                 'keyword' => sc_store('keyword'),

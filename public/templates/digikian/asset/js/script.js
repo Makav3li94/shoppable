@@ -5,7 +5,7 @@
     preloaderFadeOutTime = 1000;
     function hidePreloader() {
         var preloader = $('.preloader');
-        preloader.fadeOut(preloaderFadeOutTime);
+        preloader.fadeOut(preloaderFadeOutTime);slick-slider-home
     }
     hidePreloader();
 });*/

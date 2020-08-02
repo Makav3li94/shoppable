@@ -753,107 +753,19 @@
                 <div class="content">
                     <div class="slider-product">
                         <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            @foreach($categories[0]->products as $product)
+                                <div class="item">
+                                    <a href="{{ $product_new->getUrl() }}" title="{{$product->name}}">
+                                        <img src="{{$product->getThumb()}}" class="img-fluid" alt="{{$product->name}}">
+                                        <h2 class="shave-product-name">
+                                            {{$product->name}}
+                                        </h2>
+                                        {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                        {!! $product_new->showPrice() !!}
+                                    </a>
+                                </div>
+                            @endforeach
+
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>
@@ -866,72 +778,8 @@
         <!--End Product-->
 
         <!--Offer Moment-->
-        <div class="col-lg-2 px-0 pr-lg-2">
-            <div class="cart-shadow-radius bg-white">
-                <div class="col-12 offer-moment px-3 pt-4 pb-2">
-                    <div class="header">
-                        <h2 id="offer-moment-timer">پیشنهادهای لحظه‌ای برای شما</h2>
-                    </div>
-                </div>
-                <div class="col-12 offer-moment">
-                    <div class="content">
-                        <div class="slider-product">
-                            <div class="slick-offer-moment" data-slick='{"autoplay": true, "autoplaySpeed": 6800}'>
-                                <div class="item">
-                                    <a href="#">
-                                        <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                        <h2 class="shave-product-name">هدست بلوتوثی سوپر بی ساند هدست بلوتوثی سوپر بی
-                                            ساند مدل هدست بلوتوثی سوپر بی ساند مدل مدل Q3</h2>
-                                        <div class="old-price">
-                                            <del>۹۹,۰۰۰</del>
-                                        </div>
-                                        <p>۷۵,۹۰۰<span>تومان</span></p>
-                                    </a>
-                                </div>
-                                <div class="item">
-                                    <a href="#">
-                                        <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                        <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                        <div class="old-price">
-                                        </div>
-                                        <p>۷۵,۹۰۰<span>تومان</span></p>
-                                    </a>
-                                </div>
-                                <div class="item">
-                                    <a href="#">
-                                        <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                        <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                        <div class="old-price">
-                                            <del>۹۹,۰۰۰</del>
-                                        </div>
-                                        <p>۷۵,۹۰۰<span>تومان</span></p>
-                                    </a>
-                                </div>
-                                <div class="item">
-                                    <a href="#">
-                                        <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                        <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                        <div class="old-price">
-                                        </div>
-                                        <p>۷۵,۹۰۰<span>تومان</span></p>
-                                    </a>
-                                </div>
-                                <div class="item">
-                                    <a href="#">
-                                        <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                        <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                        <div class="old-price">
-                                            <del>۹۹,۰۰۰</del>
-                                        </div>
-                                        <p>۷۵,۹۰۰<span>تومان</span></p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include($templatePath.'.block.product_lastview')
+
         <!--End Offer Moment-->
 
     </section>
@@ -2059,3 +1907,5 @@
 @push('scripts')
 
 @endpush
+
+
