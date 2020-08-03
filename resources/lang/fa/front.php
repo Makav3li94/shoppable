@@ -45,6 +45,7 @@ return [
 	'vendors'            => 'خرده فروش',
 	'maintenance'        => 'در حال توسعه',
 	'features_items'     => 'محصولات جدید',
+	'best_seller_items'  => 'پرفروش ترین محصولات',
 	'recommended_items'  => 'محصولات توصیه شده',
 	'thank_contact'      => 'ارسال تشکر',
 	'date_available'     => 'داده موجود است',

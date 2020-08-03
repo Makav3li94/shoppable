@@ -55,6 +55,10 @@ class ShopProduct extends Model
         return $this->hasMany(ShopProductDescription::class, 'product_id', 'id');
     }
 
+    public function description(){
+        return $this->descriptions()->where('lang',app()->getLocale());
+    }
+
     public function promotionPrice()
     {
         return $this->hasOne(ShopProductPromotion::class, 'product_id', 'id');

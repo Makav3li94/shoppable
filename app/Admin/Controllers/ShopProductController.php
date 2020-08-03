@@ -216,6 +216,7 @@ class ShopProductController extends Controller
  */
     public function create()
     {
+
         $listProductSingle = (new ShopProduct)->getProductSingle()->getData(['keyBy' => 'id'])->toArray();
 
         // html select product group
@@ -255,6 +256,7 @@ class ShopProductController extends Controller
             'icon' => 'fa fa-plus',
             'languages' => $this->languages,
             'categories' => (new ShopCategory)->getTreeCategories(),
+            'categoriesCheck' => (new ShopCategory)->getTreeCategoriesChildParent(),
             'brands' => (new ShopBrand)->getList(),
             'suppliers' => (new ShopSupplier)->getList(),
             'taxs' => (new ShopTax)->getList(),
@@ -304,7 +306,7 @@ class ShopProductController extends Controller
                     'descriptions.*.keyword' => 'nullable|string|max:100',
                     'descriptions.*.description' => 'nullable|string|max:100',
                     'descriptions.*.content' => 'required|string',
-                    'category' => 'required',
+                    'cat_manager' => 'required',
                     'sku' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",sku',
                     'alias' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",alias|string|max:100',
                 ];
@@ -331,7 +333,7 @@ class ShopProductController extends Controller
                     'descriptions.*.name' => 'required|string|max:100',
                     'descriptions.*.keyword' => 'nullable|string|max:100',
                     'descriptions.*.description' => 'nullable|string|max:100',
-                    'category' => 'required',
+                    'cat_manager' => 'required',
                     'sku' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",sku',
                     'alias' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",alias|string|max:100',
                     'productBuild' => 'required',
@@ -380,7 +382,7 @@ class ShopProductController extends Controller
                 ->withInput($data);
         }
 
-        $category = $data['category'] ?? [];
+        $category = $data['cat_manager'] ?? [];
         $attribute = $data['attribute'] ?? [];
         $descriptions = $data['descriptions'];
         $productInGroup = $data['productInGroup'] ?? [];
@@ -424,6 +426,7 @@ class ShopProductController extends Controller
 
         //Insert category
         if ($category && in_array($data['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $category = explode(',', $category);
             $product->categories()->attach($category);
         }
         //Insert group
@@ -549,6 +552,7 @@ class ShopProductController extends Controller
             'kinds' => $this->kinds,
             'attributeGroup' => $this->attributeGroup,
             'htmlSelectGroup' => $htmlSelectGroup,
+            'categoriesCheck' => (new ShopCategory)->getTreeCategoriesChildParent(),
             'htmlSelectBuild' => $htmlSelectBuild,
             'listProductSingle' => $listProductSingle,
             'htmlProductAtrribute' => $htmlProductAtrribute,
@@ -585,8 +589,8 @@ class ShopProductController extends Controller
                     'descriptions.*.keyword' => 'nullable|string|max:200',
                     'descriptions.*.description' => 'nullable|string|max:300',
                     'descriptions.*.content' => 'required|string',
-                    'category' => 'required',
-                    'sku' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",sku,' . $product->id . ',id',
+                    'cat_manager' => 'required',
+//                    'sku' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",sku,' . $product->id . ',id',
                     'alias' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",alias,' . $product->id . ',id|string|max:100',
                 ];
                 $arrMsg = [
@@ -610,7 +614,7 @@ class ShopProductController extends Controller
                     'descriptions.*.name' => 'required|string|max:200',
                     'descriptions.*.keyword' => 'nullable|string|max:200',
                     'descriptions.*.description' => 'nullable|string|max:300',
-                    'category' => 'required',
+                    'cat_manager' => 'required',
                     'sku' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",sku,' . $product->id . ',id',
                     'alias' => 'required|regex:/(^([0-9A-Za-z\-_]+)$)/|unique:"'.ShopProduct::class.'",alias,' . $product->id . ',id|string|max:100',
                     'productBuild' => 'required',
@@ -655,7 +659,7 @@ class ShopProductController extends Controller
         }
 //Edit
 
-        $category = $data['category'] ?? [];
+        $category = $data['cat_manager'] ?? [];
         $attribute = $data['attribute'] ?? [];
         $productInGroup = $data['productInGroup'] ?? [];
         $productBuild = $data['productBuild'] ?? [];
@@ -713,10 +717,10 @@ class ShopProductController extends Controller
         //Update category
         if (in_array($product['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
             $product->categories()->detach();
+            $category = explode(',', $category);
             if (count($category)) {
                 $product->categories()->attach($category);
             }
-
         }
 
         //Update group

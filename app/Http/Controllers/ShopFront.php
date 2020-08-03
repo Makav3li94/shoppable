@@ -26,19 +26,18 @@ class ShopFront extends GeneralController
      */
     public function index()
     {
-        (new ShopCategory)->start()->getList(['status' => 1]);
         $lang = app()->getLocale();
 
         $categories = ShopCategory::whereHas('descriptions',function ($q) use ($lang){
             $q->where('lang',$lang);
-        })->where([['parent',0],['status',1]])->orderBy('sort','desc')->get();
-
+        })->where([['top',1],['status',1]])->orderBy('sort','desc')->get();
         return view($this->templatePath . '.screen.shop_home',compact('categories'),
             array(
                 'title' => sc_store('title'),
                 'keyword' => sc_store('keyword'),
                 'description' => sc_store('description'),
                 'layout_page' => 'shop_home',
+                'brands' => ShopBrand::all(),
             )
         );
     }

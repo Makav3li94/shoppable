@@ -30,6 +30,9 @@ class ShopCategory extends Model
         return $this->hasMany(ShopCategoryDescription::class, 'category_id', 'id');
     }
 
+    public function description(){
+        return $this->descriptions()->where('lang',app()->getLocale());
+    }
     /**
      * Get category parent
      */
@@ -72,6 +75,25 @@ class ShopCategory extends Model
         return $arrayID;
     }
 
+    public function getTreeCategoriesChildParent($parent = 0)
+    {
+        $tree = '';
+        $categories = ShopCategory::all();
+        foreach ($categories as $key=> $value) {
+//            <input type="checkbox" name="category[]" id="chb-' . $key . '" value="' . $value->id . '" hidden>
+            if ($value->parent == $parent) {
+                $tree .= '<li id="'.$value->id.'">'. $value->description[0]->title . '';
+                $tree .= $this->getTreeCategoriesChildParent($value->id);
+                $tree .= '</li>';
+            }
+        }
+        if (empty($tree) === false) {
+            $tree = '<ul ' . ($parent == 0 ? 'id="treeData"' : null) . ' style="display: none;list-style: none">' . $tree . '</ul>';
+        }
+
+        return $tree;
+
+    }
     /**
      * Get tree categories
      *

@@ -8,6 +8,8 @@
 @php
     $productsNew = $modelProduct->start()->getProductLatest()->setlimit(8)->getData();
     $productsHot = $modelProduct->start()->getProductHot()->getData();
+    $productsPromotion = $modelProduct->start()->getProductPromotion()->getData();
+    $productsSell = $modelProduct->start()->getProductBestSell()->getData();
     $productsBuild = $modelProduct->start()->getProductBuild()->getData();
     $productsGroup = $modelProduct->start()->getProductGroup()->getData();
 @endphp
@@ -738,178 +740,93 @@
         </div>
     </section>
     <!--Section Adplacement-->
+    @if(isset($categories[0]))
+        <!--Section Product and Offer Moment-->
+        <section class="row mt-2 mt-md-4 fix-col-lg-10-2">
 
-    <!--Section Product and Offer Moment-->
-    <section class="row mt-2 mt-md-4 fix-col-lg-10-2">
-
-        <!--Product-->
-        <div class="col-lg-10 bg-slider-product bg-white cart-shadow-radius">
-            <div class="col-12 px-3 pt-4 pb-2">
-                <div class="header">
-                    <h2>کامپیوتر و تجهیزات جانبی</h2>
+            <!--Product-->
+            <div class="col-lg-10 bg-slider-product bg-white cart-shadow-radius">
+                <div class="col-12 px-3 pt-4 pb-2">
+                    <div class="header">
+                        <h2>{{$categories[0]->description[0]->title}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 px-0 px-md-2">
-                <div class="content">
-                    <div class="slider-product">
-                        <div class="slick-slider-product">
-                            @foreach($categories[0]->products as $product)
-                                <div class="item">
-                                    <a href="{{ $product_new->getUrl() }}" title="{{$product->name}}">
-                                        <img src="{{$product->getThumb()}}" class="img-fluid" alt="{{$product->name}}">
-                                        <h2 class="shave-product-name">
-                                            {{$product->name}}
-                                        </h2>
-                                        {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
-                                        {!! $product_new->showPrice() !!}
-                                    </a>
-                                </div>
-                            @endforeach
+                <div class="col-12 px-0 px-md-2">
+                    <div class="content">
+                        <div class="slider-product">
+                            <div class="slick-slider-product">
 
+                                @foreach($categories[0]->products as $product)
+                                    <div class="item">
+                                        <a href="{{ $product->getUrl() }}" title="{{$product->name}}">
+                                            <img src="{{$product->getThumb()}}" class="img-fluid"
+                                                 alt="{{$product->name}}">
+                                            <h2 class="shave-product-name">
+                                                {{$product->description[0]->name}}
+                                            </h2>
+                                            {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                            {!! $product->showPrice() !!}
+                                        </a>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
+                                        class="mdi mdi-chevron-left"></i></div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
+                                        class="mdi mdi-chevron-right"></i></div>
                         </div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
-                                    class="mdi mdi-chevron-left"></i></div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
-                                    class="mdi mdi-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--End Product-->
+            <!--End Product-->
 
-        <!--Offer Moment-->
+            <!--Offer Moment-->
         @include($templatePath.'.block.product_lastview')
 
         <!--End Offer Moment-->
 
-    </section>
-    <!--Section Product and Offer Moment-->
-
+        </section>
+        <!--Section Product and Offer Moment-->
+    @endif
     <!--Section Product Category-->
-    <section class="row mt-2 mt-md-4">
-        <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
-            <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
-                <div class="header">
-                    <h2>کالای دیجیتال</h2>
+    @if(isset($categories[1]))
+        <section class="row mt-2 mt-md-4">
+            <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
+                <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
+                    <div class="header">
+                        <h2>{{$categories[1]->description[0]->title}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 px-0 px-md-2">
-                <div class="content">
-                    <div class="slider-product">
-                        <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
+                <div class="col-12 px-0 px-md-2">
+                    <div class="content">
+                        <div class="slider-product">
+                            <div class="slick-slider-product">
+                                @foreach($categories[1]->products as $product)
+                                    <div class="item">
+                                        <a href="{{ $product->getUrl() }}" title="{{$product->name}}">
+                                            <img src="{{$product->getThumb()}}" class="img-fluid"
+                                                 alt="{{$product->name}}">
+                                            <h2 class="shave-product-name">
+                                                {{$product->description[0]->name}}
+                                            </h2>
+                                            {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                            {!! $product->showPrice() !!}
+                                        </a>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
+                                        class="mdi mdi-chevron-left"></i></div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
+                                        class="mdi mdi-chevron-right"></i></div>
                         </div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
-                                    class="mdi mdi-chevron-left"></i></div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
-                                    class="mdi mdi-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--End Section Product Category-->
-
+        </section>
+        <!--End Section Product Category-->
+    @endif
     <!--Section Adplacement-->
     <section class="row mt-2 mt-md-4">
         <div class="col-12 p-0">
@@ -930,255 +847,84 @@
     <!--Section Adplacement-->
 
     <!--Section Product Category-->
-    <section class="row mt-2 mt-md-4">
-        <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
-            <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
-                <div class="header">
-                    <h2>مد و پوشاک</h2>
+    @if(isset($categories[2]))
+        <section class="row mt-2 mt-md-4">
+            <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
+                <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
+                    <div class="header">
+                        <h2>{{$categories[2]->description[0]->title}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 px-0 px-md-2">
-                <div class="content">
-                    <div class="slider-product">
-                        <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
+                <div class="col-12 px-0 px-md-2">
+                    <div class="content">
+                        <div class="slider-product">
+                            <div class="slick-slider-product">
+                                @foreach($categories[2]->products as $product)
+                                    <div class="item">
+                                        <a href="{{ $product->getUrl() }}" title="{{$product->name}}">
+                                            <img src="{{$product->getThumb()}}" class="img-fluid"
+                                                 alt="{{$product->name}}">
+                                            <h2 class="shave-product-name">
+                                                {{$product->description[0]->name}}
+                                            </h2>
+                                            {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                            {!! $product->showPrice() !!}
+                                        </a>
+                                    </div>
+                                @endforeach
+
                             </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
+                                        class="mdi mdi-chevron-left"></i></div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
+                                        class="mdi mdi-chevron-right"></i></div>
                         </div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
-                                    class="mdi mdi-chevron-left"></i></div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
-                                    class="mdi mdi-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--End Section Product Category-->
-
+        </section>
+        <!--End Section Product Category-->
+    @endif
     <!--Section Product Category-->
-    <section class="row mt-2 mt-md-4">
-        <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
-            <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
-                <div class="header">
-                    <h2>خانه و آشپزخانه</h2>
+    @if(isset($categories[3]))
+        <section class="row mt-2 mt-md-4">
+            <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
+                <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
+                    <div class="header">
+                        <h2>{{$categories[3]->description[0]->title}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 px-0 px-md-2">
-                <div class="content">
-                    <div class="slider-product">
-                        <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
+                <div class="col-12 px-0 px-md-2">
+                    <div class="content">
+                        <div class="slider-product">
+                            <div class="slick-slider-product">
+
+                                @foreach($categories[3]->products as $product)
+                                    <div class="item">
+                                        <a href="{{ $product->getUrl() }}" title="{{$product->name}}">
+                                            <img src="{{$product->getThumb()}}" class="img-fluid"
+                                                 alt="{{$product->name}}">
+                                            <h2 class="shave-product-name">
+                                                {{$product->description[0]->name}}
+                                            </h2>
+                                            {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                            {!! $product->showPrice() !!}
+                                        </a>
+                                    </div>
+                                @endforeach
+
                             </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
+                                        class="mdi mdi-chevron-left"></i></div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
+                                        class="mdi mdi-chevron-right"></i></div>
                         </div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
-                                    class="mdi mdi-chevron-left"></i></div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
-                                    class="mdi mdi-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--End Section Product Category-->
-
+        </section>
+        <!--End Section Product Category-->
+    @endif
     <!--Section Adplacement-->
     <section class="row mt-2 mt-md-4">
         <div class="col-12 p-0">
@@ -1200,128 +946,42 @@
     <!--Section Adplacement-->
 
     <!--Section Product Category-->
-    <section class="row mt-2 mt-md-4">
-        <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
-            <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
-                <div class="header">
-                    <h2>تجهیزات جانبی کوه‌نوردی و سفر</h2>
+    @if(isset($categories[4]))
+        <section class="row mt-2 mt-md-4">
+            <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
+                <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
+                    <div class="header">
+                        <h2>{{$categories[4]->description[0]->title}}</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 px-0 px-md-2">
-                <div class="content">
-                    <div class="slider-product">
-                        <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
+                <div class="col-12 px-0 px-md-2">
+                    <div class="content">
+                        <div class="slider-product">
+                            <div class="slick-slider-product">
+                                @foreach($categories[4]->products as $product)
+                                    <div class="item">
+                                        <a href="{{ $product->getUrl() }}" title="{{$product->name}}">
+                                            <img src="{{$product->getThumb()}}" class="img-fluid"
+                                                 alt="{{$product->name}}">
+                                            <h2 class="shave-product-name">
+                                                {{$product->description[0]->name}}
+                                            </h2>
+                                            {{--<p>۷۵,۹۰۰<span>تومان</span></p>--}}
+                                            {!! $product->showPrice() !!}
+                                        </a>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
+                                        class="mdi mdi-chevron-left"></i></div>
+                            <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
+                                        class="mdi mdi-chevron-right"></i></div>
                         </div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
-                                    class="mdi mdi-chevron-left"></i></div>
-                        <div class="d-none d-md-block d-md-flex slick-slider-product-arrow prev"><i
-                                    class="mdi mdi-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
     <!--End Section Product Category-->
 
     <!--Section Product Category-->
@@ -1329,114 +989,27 @@
         <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
             <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
                 <div class="header">
-                    <h2>محصولات پربازدید اخیر</h2>
+                    <h2>
+                        {{ trans('front.products_hot') }}
+                    </h2>
                 </div>
             </div>
             <div class="col-12 px-0 px-md-2">
                 <div class="content">
                     <div class="slider-product">
                         <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            @foreach ($productsHot as $key => $product_hot)
+                                <div class="item">
+                                    <a href="{{$product_hot->getUrl()}}" title="{{$product_hot->name}}">
+                                        <img src="{{asset($product_hot->getThumb())}}" class="img-fluid"
+                                             alt="   {{$product_hot->name}}">
+                                        <h2 class="shave-product-name">
+                                            {{$product_hot->name}}
+                                        </h2>
+                                        {!! $product_hot->showPrice() !!}
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>
@@ -1473,114 +1046,26 @@
         <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
             <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
                 <div class="header">
-                    <h2>منتخب جدیدترین کالاها</h2>
+                    <h2>   {{ trans('front.features_items') }}</h2>
                 </div>
             </div>
             <div class="col-12 px-0 px-md-2">
                 <div class="content">
                     <div class="slider-product">
                         <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            @foreach ($productsNew as $key => $product_new)
+                                <div class="item">
+                                    <a href="{{$product_new->getUrl()}}" title="{{$product_new->name}}">
+                                        <img src="{{asset($product_new->getThumb())}}" class="img-fluid"
+                                             alt="       {{$product_new->name}}">
+                                        <h2 class="shave-product-name">
+                                            {{$product_new->name}}
+                                        </h2>
+                                        {!! $product_new->showPrice() !!}
+                                    </a>
+                                </div>
+                            @endforeach
+
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>
@@ -1598,114 +1083,27 @@
         <div class="col-12 bg-slider-product bg-white cart-shadow-radius px-1 px-md-3">
             <div class="col-12 px-3 pt-3 pt-md-4 pb-2">
                 <div class="header">
-                    <h2>محصولات پرفروش اخیر</h2>
+                    <h2>
+                        {{trans('front.best_seller_items')}}
+                    </h2>
                 </div>
             </div>
             <div class="col-12 px-0 px-md-2">
                 <div class="content">
                     <div class="slider-product">
                         <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            @foreach($productsSell  as $productSell)
+                                <div class="item">
+                                    <a href="{{$productSell->getUrl()}}" title="{{$productSell->name}}">
+                                        <img src="{{asset($productSell->getThumb())}}" class="img-fluid"
+                                             alt="       {{$productSell->name}}">
+                                        <h2 class="shave-product-name">
+                                            {{$productSell->name}}
+                                        </h2>
+                                        {!! $productSell->showPrice() !!}
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>
@@ -1730,36 +1128,11 @@
                 <div class="content">
                     <div class="slider-brand">
                         <div class="slick-slider-brand">
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/001.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/002.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/003.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/004.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/005.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/brand/006.png" class="img-fluid" alt="">
-                                </a>
-                            </div>
+                            @foreach($brands as $brand)
+                                <div class="item">
+                                    <img src="{{$brand->image}}" class="img-fluid" alt="">
+                                </div>
+                            @endforeach
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>
@@ -1785,109 +1158,18 @@
                 <div class="content">
                     <div class="slider-product">
                         <div class="slick-slider-product">
-                            <div class="item">
-                                <a href="#">
-                                    <span class="discount">٪۵</span>
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه هویت مدل H524 ظرفیت 10000 میلی
-                                        آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">شارژر همراه شیاومی مدل Mi Power Bank 2 با ظرفیت
-                                        10</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ مدل Gear S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2 class="shave-product-name">ساعت هوشمند سامسونگ ساعت هوشمند سامسونگ مدل مدل Gear
-                                        S3 Frontier SM-R760</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <span class="discount">٪۲۱</span>
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/001.jpg" class="img-fluid" alt="">
-                                    <h2>شارژر همراه هویت مدل H524 ظرفیت 10000 میلی آمپرساعت</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/002.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/003.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/004.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/005.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/006.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="asset/files/product/350-350/007.jpg" class="img-fluid" alt="">
-                                    <h2>هدست بلوتوثی سوپر بی ساند مدل Q3</h2>
-                                    <p>۷۵,۹۰۰<span>تومان</span></p>
-                                </a>
-                            </div>
+                            @foreach($productsPromotion as $productPromotion)
+                                <div class="item">
+                                    <a href="{{$productPromotion->getUrl()}}" title="{{$productPromotion->name}}">
+                                        <img src="{{asset($productPromotion->getThumb())}}" class="img-fluid"
+                                             alt="       {{$productPromotion->name}}">
+                                        <h2 class="shave-product-name">
+                                            {{$productPromotion->name}}
+                                        </h2>
+                                        {!! $productPromotion->showPrice() !!}
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="d-none d-md-block d-md-flex slick-slider-product-arrow next"><i
                                     class="mdi mdi-chevron-left"></i></div>

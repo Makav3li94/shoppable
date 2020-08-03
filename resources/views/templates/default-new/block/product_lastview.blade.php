@@ -30,8 +30,11 @@ if ($lastView && count($lastView)) {
                     <div class="col-4"><a href="{{ $product_lastView->getUrl() }}"><img
                                 src="{{ asset($product_lastView->getThumb()) }}"
                                 alt="{{ $product_lastView->name }}" /></a></div>
-                    <div class="col-8"><a href="{{ $product_lastView->getUrl() }}">{{ $product_lastView->name}}</a><span
-                            class="last-view">({{ $product_lastView['timelastview'] }})</span></div>
+                    <div class="col-8"><a href="{{ $product_lastView->getUrl() }}">{{ $product_lastView->name}}</a>
+                        <span class="last-view">
+                            {!! $product_lastView['timelastview'] !!}
+                        </span>
+                    </div>
                 </div>
             </li>
             @endforeach

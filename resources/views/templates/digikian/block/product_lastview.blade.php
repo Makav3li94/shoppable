@@ -39,7 +39,7 @@
                                         <h2 class="shave-product-name">
                                             {{$product_lastView->name}}
                                         </h2>
-                                        {{$product_lastView->showPrice()}}
+                                        {!! $product_lastView->showPrice() !!}
                                         {{--<div class="old-price">--}}
                                         {{--<del>۹۹,۰۰۰</del>--}}
                                         {{--</div>--}}
