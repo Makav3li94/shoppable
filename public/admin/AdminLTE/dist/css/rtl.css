@@ -78,7 +78,9 @@ th {
     border: 1px solid #ccc!important;
 }
 
-
+.input-group .form-control{
+    float: right;
+}
 
 
 

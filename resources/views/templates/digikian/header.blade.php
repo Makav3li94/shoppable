@@ -102,7 +102,8 @@
 
                     <div class="right">
                         <!--Logo-->
-                        <div class="logo"><a href="{{route('home')}}"><img src="{{ asset(sc_store('logo')) }}" alt=""></a></div>
+                        <div class="logo"><a href="{{route('home')}}"><img src="{{ asset(sc_store('logo')) }}"
+                                                                           alt=""></a></div>
                         <!-- Logo-->
 
                         <!--Search and Result Search-->
@@ -186,29 +187,32 @@
                             </svg>
                             <div class="panel">
                                 @guest
-                                <div class="header">
-                                    <a href="signin.html" class="btn btn-info btn-lg btn-block">{{trans('front.login')}}</a>
-                                    <p>{{trans('front.new_user')}}<a href="signup.html">{{trans('front.sigh_up')}}</a></p>
-                                </div>
+                                    <div class="header">
+                                        <a href="signin.html"
+                                           class="btn btn-info btn-lg btn-block">{{trans('front.login')}}</a>
+                                        <p>{{trans('front.new_user')}}<a
+                                                    href="signup.html">{{trans('front.sigh_up')}}</a></p>
+                                    </div>
                                 @else
-                                <div class="body">
+                                    <div class="body">
 
-                                    <a href="{{ route('member.index') }}">
-                                        <i class="d-inline-flex align-middle ml-2 mdi mdi-account-outline"></i>
-                                        {{ trans('front.account') }}
-                                    </a>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="d-inline-flex align-middle ml-2 mdi mdi-account-outline"></i>
-                                        {{ trans('front.logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">@csrf</form>
-                                    <a href="profile-order.html"><i
-                                                class="d-inline-flex align-middle ml-2 mdi mdi-cart-outline"></i>پیگیری
-                                        سفارش</a>
-                                    <!--<a href="profile-order.html"><i class="d-inline-flex align-middle ml-2 mdi mdi-basket"></i>سفارش‌های من</a>-->
-                                    <!--<a href="#"><i class="d-inline-flex align-middle ml-2 mdi mdi-logout"></i>خروج</a>-->
-                                </div>
+                                        <a href="{{ route('member.index') }}">
+                                            <i class="d-inline-flex align-middle ml-2 mdi mdi-account-outline"></i>
+                                            {{ trans('front.account') }}
+                                        </a>
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="d-inline-flex align-middle ml-2 mdi mdi-account-outline"></i>
+                                            {{ trans('front.logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                              style="display: none;">@csrf</form>
+                                        <a href="profile-order.html"><i
+                                                    class="d-inline-flex align-middle ml-2 mdi mdi-cart-outline"></i>پیگیری
+                                            سفارش</a>
+                                        <!--<a href="profile-order.html"><i class="d-inline-flex align-middle ml-2 mdi mdi-basket"></i>سفارش‌های من</a>-->
+                                        <!--<a href="#"><i class="d-inline-flex align-middle ml-2 mdi mdi-logout"></i>خروج</a>-->
+                                    </div>
                                 @endguest
                             </div>
                         </div>
@@ -223,7 +227,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                      version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 486.569 486.569"
                                      style="enable-background:new 0 0 486.569 486.569;" xml:space="preserve"
-                                     width="24px" height="24px"><g>
+                                     width="24px" height="24px">
+                                    <g>
                                         <path d="M146.069,320.369h268.1c30.4,0,55.2-24.8,55.2-55.2v-112.8c0-0.1,0-0.3,0-0.4c0-0.3,0-0.5,0-0.8c0-0.2,0-0.4-0.1-0.6 c0-0.2-0.1-0.5-0.1-0.7s-0.1-0.4-0.1-0.6c-0.1-0.2-0.1-0.4-0.2-0.7c-0.1-0.2-0.1-0.4-0.2-0.6c-0.1-0.2-0.1-0.4-0.2-0.6 c-0.1-0.2-0.2-0.4-0.3-0.7c-0.1-0.2-0.2-0.4-0.3-0.5c-0.1-0.2-0.2-0.4-0.3-0.6c-0.1-0.2-0.2-0.3-0.3-0.5c-0.1-0.2-0.3-0.4-0.4-0.6 c-0.1-0.2-0.2-0.3-0.4-0.5c-0.1-0.2-0.3-0.3-0.4-0.5s-0.3-0.3-0.4-0.5s-0.3-0.3-0.4-0.4c-0.2-0.2-0.3-0.3-0.5-0.5 c-0.2-0.1-0.3-0.3-0.5-0.4c-0.2-0.1-0.4-0.3-0.6-0.4c-0.2-0.1-0.3-0.2-0.5-0.3s-0.4-0.2-0.6-0.4c-0.2-0.1-0.4-0.2-0.6-0.3 s-0.4-0.2-0.6-0.3s-0.4-0.2-0.6-0.3s-0.4-0.1-0.6-0.2c-0.2-0.1-0.5-0.2-0.7-0.2s-0.4-0.1-0.5-0.1c-0.3-0.1-0.5-0.1-0.8-0.1 c-0.1,0-0.2-0.1-0.4-0.1l-339.8-46.9v-47.4c0-0.5,0-1-0.1-1.4c0-0.1,0-0.2-0.1-0.4c0-0.3-0.1-0.6-0.1-0.9c-0.1-0.3-0.1-0.5-0.2-0.8 c0-0.2-0.1-0.3-0.1-0.5c-0.1-0.3-0.2-0.6-0.3-0.9c0-0.1-0.1-0.3-0.1-0.4c-0.1-0.3-0.2-0.5-0.4-0.8c-0.1-0.1-0.1-0.3-0.2-0.4 c-0.1-0.2-0.2-0.4-0.4-0.6c-0.1-0.2-0.2-0.3-0.3-0.5s-0.2-0.3-0.3-0.5s-0.3-0.4-0.4-0.6c-0.1-0.1-0.2-0.2-0.3-0.3 c-0.2-0.2-0.4-0.4-0.6-0.6c-0.1-0.1-0.2-0.2-0.3-0.3c-0.2-0.2-0.4-0.4-0.7-0.6c-0.1-0.1-0.3-0.2-0.4-0.3c-0.2-0.2-0.4-0.3-0.6-0.5 c-0.3-0.2-0.6-0.4-0.8-0.5c-0.1-0.1-0.2-0.1-0.3-0.2c-0.4-0.2-0.9-0.4-1.3-0.6l-73.7-31c-6.9-2.9-14.8,0.3-17.7,7.2 s0.3,14.8,7.2,17.7l65.4,27.6v61.2v9.7v74.4v66.5v84c0,28,21,51.2,48.1,54.7c-4.9,8.2-7.8,17.8-7.8,28c0,30.1,24.5,54.5,54.5,54.5 s54.5-24.5,54.5-54.5c0-10-2.7-19.5-7.5-27.5h121.4c-4.8,8.1-7.5,17.5-7.5,27.5c0,30.1,24.5,54.5,54.5,54.5s54.5-24.5,54.5-54.5 s-24.5-54.5-54.5-54.5h-255c-15.6,0-28.2-12.7-28.2-28.2v-36.6C126.069,317.569,135.769,320.369,146.069,320.369z M213.269,431.969 c0,15.2-12.4,27.5-27.5,27.5s-27.5-12.4-27.5-27.5s12.4-27.5,27.5-27.5S213.269,416.769,213.269,431.969z M428.669,431.969 c0,15.2-12.4,27.5-27.5,27.5s-27.5-12.4-27.5-27.5s12.4-27.5,27.5-27.5S428.669,416.769,428.669,431.969z M414.169,293.369h-268.1 c-15.6,0-28.2-12.7-28.2-28.2v-66.5v-74.4v-5l324.5,44.7v101.1C442.369,280.769,429.669,293.369,414.169,293.369z"
                                               fill="#00bfd6"/>
                                     </g>
@@ -241,39 +246,49 @@
                                     <g></g>
                                     <g></g>
                                     <g></g>
-                                    <g></g></svg>
-                                سبد خرید<span class="badge badge-light">۲</span></a>
+                                    <g></g>
+                                </svg>
+                                {{ trans('front.cart_title') }}
+                                <span class="badge badge-light">{{ Cart::instance('default')->count() }}</span>
+                            </a>
                             <div class="basket-box">
+                                <pre>
+                                @php
+                                    $cart = Cart::instance('default')->content();
+                                @endphp
                                 <div class="top">
                                     <p>مبلغ کل خرید:<span>۲۹۲,۰۰۰ تومان</span></p>
                                     <a href="add-to-cart.html">مشاهده سبد خرید<span class="basket-arrow"></span></a>
                                 </div>
                                 <div class="center">
-                                    <div class="item">
-                                        <div class="box-right">
-                                            <a class="delete" href="#"><i class="mdi mdi-close"></i></a>
-                                            <a class="thumb" href="#"><img src="asset/files/product/350-350/002.jpg"
-                                                                           alt=""></a>
+                                     @foreach($cart as $item)
+                                        @php
+                                            $n = (isset($n)?$n:0);
+                                            $n++;
+                                            $product = $modelProduct->start()->getDetail($item->id);
+                                        @endphp
+                                        <div class="item">
+                                            <div class="box-right">
+                                                <a onClick="return confirm('مطمئنید ؟')" title="Remove Item" alt="Remove Item" class=" delete" href="{{route("cart.remove",['id'=>$item->rowId])}}"><i class="mdi mdi-close"></i></a>
+                                                <a class="thumb" href="{{$product->getUrl() }}">
+                                                    <img src="{{asset($product->getImage())}}" alt="{{ $product->name }}"></a>
+                                            </div>
+                                            <div class="box-left">
+                                                <a href="#" class="title">{{$product->name}}</a>
+                                                <p class="desc"><span>{{$item->qty}} عدد</span>
+                                                    @if ($item->options->count())
+                                                    @foreach ($item->options as $groupAtt => $att)
+                                                        <span>{{ $attributesGroup[$groupAtt] }} : {!! sc_render_option_price($att) !!}</span>
+                                                    @endforeach
+                                                    @endif
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="box-left">
-                                            <a href="#" class="title">ساعت هوشمند اسمارت لایف مدل V9</a>
-                                            <p class="desc"><span>1 عدد</span><span>رنگ مشکی</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="box-right">
-                                            <a class="delete" href="#"><i class="mdi mdi-close"></i></a>
-                                            <a class="thumb" href="#"><img src="asset/files/product/350-350/001.jpg"
-                                                                           alt=""></a>
-                                        </div>
-                                        <div class="box-left">
-                                            <a href="#" class="title">ساعت هوشمند اسمارت لایف مدل V9</a>
-                                            <p class="desc"><span>1 عدد</span><span>رنگ مشکی</span></p>
-                                        </div>
-                                    </div>
+                                    @endforeach
+
                                 </div>
                                 <div class="bottom">
-                                    <a href="shipping.html">ورود و ثبت سفارشی</a>
+                                    <a href="{{ route('cart') }}">ادامه سفارش</a>
                                 </div>
                             </div>
                         </div>
@@ -447,6 +462,18 @@
                             </a>
                         </div>
                         <!--End Auth and Basket Cart and Search and Result Search-->
+                        @if (count($languages)>1)
+                            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown"><img
+                                        src="{{ asset($languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach ($languages as $key => $language)
+                                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset($language['icon']) }}"
+                                                                                 style="height: 25px;"></a></li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
 
                 </div>
@@ -462,251 +489,10 @@
                 <div class="col-12 menu-header">
 
                     <!--Menu and Sub Menu-->
-                    <div class="main-menu">
-                        <ul>
-                            <li><a href="#">کالای دیجیتال</a>
-                                <!--Sub Menu-->
-                                <div class="row sub-menu" style="background: #FFF url('asset/files/menu/001.png')">
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">لوازم جانبی گوشی</a></li>
-                                            <li><a href="#">کیف و کاور گوشی</a></li>
-                                            <li><a href="#">پاور بانک (شارژر همراه)</a></li>
-                                            <li><a href="#">هندزفری، هدفون، هدست</a></li>
-                                            <li><a href="#">پایه نگهدارنده گوشی</a></li>
-                                            <li class="title"><a href="#">گوشی موبایل</a></li>
-                                            <li><a href="#">آیفون اپل</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li class="title"><a href="#">واقعیت مجازی</a></li>
-                                            <li class="title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
-                                            <li class="title"><a href="#">هدفون، هدست، هندزفری</a></li>
-                                            <li class="title"><a href="#">اسپیکر بلوتوث و با سیم</a></li>
-                                            <li class="title"><a href="#">اسکوتر برقی</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">هارد، فلش و SSD</a></li>
-                                            <li class="title"><a href="#">دوربین</a></li>
-                                            <li><a href="#">دوربین عکاسی دیجیتال</a></li>
-                                            <li><a href="#">دوربین‌ ورزشی و فیلم برداری</a></li>
-                                            <li><a href="#">دوربین‌ چاپ سریع</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی دوربین</a></li>
-                                            <li><a href="#">لنز</a></li>
-                                            <li><a href="#">کیف</a></li>
-                                            <li><a href="#">کارت حافظه</a></li>
-                                            <li><a href="#">کاغذ چاپ عکس</a></li>
-                                            <li class="title"><a href="#">دوربین‌های تحت شبکه</a></li>
-                                            <li class="title"><a href="#">دوربین دو چشمی و شکاری</a></li>
-                                            <li class="title"><a href="#">تلسکوپ</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">XBox, PS4 و بازی</a></li>
-                                            <li class="title"><a href="#">لپ تاپ</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی لپتاپ</a></li>
-                                            <li><a href="#">کیف، کوله و کاور</a></li>
-                                            <li><a href="#">کابل‌های رابط و مبدل</a></li>
-                                            <li><a href="#">کابل‌ صدا، AUX و HDMI</a></li>
-                                            <li class="title"><a href="#">مودم و تجهیزات شبکه</a></li>
-                                            <li class="title"><a href="#">کامپیوتر و تجهیزات جانبی</a></li>
-                                            <li><a href="#">تجهیزات مخصوص بازی</a></li>
-                                            <li><a href="#">مانیتور</a></li>
-                                            <li><a href="#">کیس‌های اسمبل شده</a></li>
-                                            <li><a href="#">قطعات داخلی کامپیوتر</a></li>
-                                            <li><a href="#">ماوس</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">تبلت</a></li>
-                                            <li><a href="#">لنوو</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li><a href="#">ایسوس</a></li>
-                                            <li class="title"><a href="#">کیف، کاور، لوازم جانبی تبلت</a></li>
-                                            <li class="title"><a href="#">ماشین های اداری</a></li>
-                                            <li><a href="#">لوازم جانبی پرینتر</a></li>
-                                            <li><a href="#">تلفن، بی سیم و سانترال</a></li>
-                                            <li><a href="#">فکس</a></li>
-                                            <li><a href="#">پرینتر</a></li>
-                                            <li><a href="#">لیبل زن و لوازم جانبی</a></li>
-                                            <li class="title"><a href="#">کتابخوان فیدیبوک</a></li>
-                                            <li class="title"><a href="#">کارت هدیه خرید از دیجی کیان</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-12"><a href="#" class="more">
-                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                <path fill="#19bfd3" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-                                            </svg>
-                                            همه دسته‌بندی‌های کالای دیجیتال</a></div>
-                                </div>
-                                <!--End Sub Menu-->
-                            </li>
-                            <li><a href="#">وسایل نقلیه، ابزار و اداری</a>
-                                <div class="row sub-menu" style="background: #FFF url('asset/files/menu/002.png')">
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">لوازم جانبی گوشی</a></li>
-                                            <li><a href="#">کیف و کاور گوشی</a></li>
-                                            <li><a href="#">پاور بانک (شارژر همراه)</a></li>
-                                            <li><a href="#">هندزفری، هدفون، هدست</a></li>
-                                            <li><a href="#">پایه نگهدارنده گوشی</a></li>
-                                            <li class="title"><a href="#">گوشی موبایل</a></li>
-                                            <li><a href="#">آیفون اپل</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li class="title"><a href="#">واقعیت مجازی</a></li>
-                                            <li class="title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
-                                            <li class="title"><a href="#">هدفون، هدست، هندزفری</a></li>
-                                            <li class="title"><a href="#">اسپیکر بلوتوث و با سیم</a></li>
-                                            <li class="title"><a href="#">اسکوتر برقی</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">هارد، فلش و SSD</a></li>
-                                            <li class="title"><a href="#">دوربین</a></li>
-                                            <li><a href="#">دوربین عکاسی دیجیتال</a></li>
-                                            <li><a href="#">دوربین‌ ورزشی و فیلم برداری</a></li>
-                                            <li><a href="#">دوربین‌ چاپ سریع</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی دوربین</a></li>
-                                            <li><a href="#">لنز</a></li>
-                                            <li><a href="#">کیف</a></li>
-                                            <li><a href="#">کارت حافظه</a></li>
-                                            <li><a href="#">کاغذ چاپ عکس</a></li>
-                                            <li class="title"><a href="#">دوربین‌های تحت شبکه</a></li>
-                                            <li class="title"><a href="#">دوربین دو چشمی و شکاری</a></li>
-                                            <li class="title"><a href="#">تلسکوپ</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">XBox, PS4 و بازی</a></li>
-                                            <li class="title"><a href="#">لپ تاپ</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی لپتاپ</a></li>
-                                            <li><a href="#">کیف، کوله و کاور</a></li>
-                                            <li><a href="#">کابل‌های رابط و مبدل</a></li>
-                                            <li><a href="#">کابل‌ صدا، AUX و HDMI</a></li>
-                                            <li class="title"><a href="#">مودم و تجهیزات شبکه</a></li>
-                                            <li class="title"><a href="#">کامپیوتر و تجهیزات جانبی</a></li>
-                                            <li><a href="#">تجهیزات مخصوص بازی</a></li>
-                                            <li><a href="#">مانیتور</a></li>
-                                            <li><a href="#">کیس‌های اسمبل شده</a></li>
-                                            <li><a href="#">قطعات داخلی کامپیوتر</a></li>
-                                            <li><a href="#">ماوس</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">تبلت</a></li>
-                                            <li><a href="#">لنوو</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li><a href="#">ایسوس</a></li>
-                                            <li class="title"><a href="#">کیف، کاور، لوازم جانبی تبلت</a></li>
-                                            <li class="title"><a href="#">ماشین های اداری</a></li>
-                                            <li><a href="#">لوازم جانبی پرینتر</a></li>
-                                            <li><a href="#">تلفن، بی سیم و سانترال</a></li>
-                                            <li><a href="#">فکس</a></li>
-                                            <li><a href="#">پرینتر</a></li>
-                                            <li><a href="#">لیبل زن و لوازم جانبی</a></li>
-                                            <li class="title"><a href="#">کتابخوان فیدیبوک</a></li>
-                                            <li class="title"><a href="#">کارت هدیه خرید از دیجی کیان</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-12"><a href="#" class="more">
-                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                <path fill="#19bfd3" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-                                            </svg>
-                                            همه دسته‌بندی‌های کالای دیجیتال</a></div>
-                                </div>
-                            </li>
-                            <li><a href="#">آرایشی، بهداشتی و سلامت</a></li>
-                            <li><a href="#">مد و پوشاک</a></li>
-                            <li><a href="#">خانه و آشپزخانه</a></li>
-                            <li><a href="#">کتاب، لوازم تحریر و هنر</a></li>
-                            <li><a href="#">اسباب بازی، کودک و نوزاد</a></li>
-                            <li><a href="#">ورزش و سفر</a>
-                                <!--Sub Menu-->
-                                <div class="row sub-menu" style="background: #FFF url('asset/files/menu/001.png')">
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">لوازم جانبی گوشی</a></li>
-                                            <li><a href="#">کیف و کاور گوشی</a></li>
-                                            <li><a href="#">پاور بانک (شارژر همراه)</a></li>
-                                            <li><a href="#">هندزفری، هدفون، هدست</a></li>
-                                            <li><a href="#">پایه نگهدارنده گوشی</a></li>
-                                            <li class="title"><a href="#">گوشی موبایل</a></li>
-                                            <li><a href="#">آیفون اپل</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li class="title"><a href="#">واقعیت مجازی</a></li>
-                                            <li class="title"><a href="#">مچ‌بند و ساعت هوشمند</a></li>
-                                            <li class="title"><a href="#">هدفون، هدست، هندزفری</a></li>
-                                            <li class="title"><a href="#">اسپیکر بلوتوث و با سیم</a></li>
-                                            <li class="title"><a href="#">اسکوتر برقی</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">هارد، فلش و SSD</a></li>
-                                            <li class="title"><a href="#">دوربین</a></li>
-                                            <li><a href="#">دوربین عکاسی دیجیتال</a></li>
-                                            <li><a href="#">دوربین‌ ورزشی و فیلم برداری</a></li>
-                                            <li><a href="#">دوربین‌ چاپ سریع</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی دوربین</a></li>
-                                            <li><a href="#">لنز</a></li>
-                                            <li><a href="#">کیف</a></li>
-                                            <li><a href="#">کارت حافظه</a></li>
-                                            <li><a href="#">کاغذ چاپ عکس</a></li>
-                                            <li class="title"><a href="#">دوربین‌های تحت شبکه</a></li>
-                                            <li class="title"><a href="#">دوربین دو چشمی و شکاری</a></li>
-                                            <li class="title"><a href="#">تلسکوپ</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">XBox, PS4 و بازی</a></li>
-                                            <li class="title"><a href="#">لپ تاپ</a></li>
-                                            <li class="title"><a href="#">لوازم جانبی لپتاپ</a></li>
-                                            <li><a href="#">کیف، کوله و کاور</a></li>
-                                            <li><a href="#">کابل‌های رابط و مبدل</a></li>
-                                            <li><a href="#">کابل‌ صدا، AUX و HDMI</a></li>
-                                            <li class="title"><a href="#">مودم و تجهیزات شبکه</a></li>
-                                            <li class="title"><a href="#">کامپیوتر و تجهیزات جانبی</a></li>
-                                            <li><a href="#">تجهیزات مخصوص بازی</a></li>
-                                            <li><a href="#">مانیتور</a></li>
-                                            <li><a href="#">کیس‌های اسمبل شده</a></li>
-                                            <li><a href="#">قطعات داخلی کامپیوتر</a></li>
-                                            <li><a href="#">ماوس</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <ul>
-                                            <li class="title"><a href="#">تبلت</a></li>
-                                            <li><a href="#">لنوو</a></li>
-                                            <li><a href="#">سامسونگ</a></li>
-                                            <li><a href="#">ایسوس</a></li>
-                                            <li class="title"><a href="#">کیف، کاور، لوازم جانبی تبلت</a></li>
-                                            <li class="title"><a href="#">ماشین های اداری</a></li>
-                                            <li><a href="#">لوازم جانبی پرینتر</a></li>
-                                            <li><a href="#">تلفن، بی سیم و سانترال</a></li>
-                                            <li><a href="#">فکس</a></li>
-                                            <li><a href="#">پرینتر</a></li>
-                                            <li><a href="#">لیبل زن و لوازم جانبی</a></li>
-                                            <li class="title"><a href="#">کتابخوان فیدیبوک</a></li>
-                                            <li class="title"><a href="#">کارت هدیه خرید از دیجی کیان</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-12"><a href="#" class="more">
-                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                <path fill="#19bfd3" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-                                            </svg>
-                                            همه دسته‌بندی‌های کالای دیجیتال</a></div>
-                                </div>
-                                <!--End Sub Menu-->
-                            </li>
-                        </ul>
-                    </div>
-                    <!--End Menu and Sub Menu-->
+
+                @include($templatePath.'.block.mega_menu')
+
+                <!--End Menu and Sub Menu-->
 
                     <!--Promotions-->
                     <div class="promotions">

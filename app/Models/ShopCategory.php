@@ -189,6 +189,15 @@ class ShopCategory extends Model
         return $data;
     }
 
+    public function getCategoriesTop()
+    {
+        $lang = $this->lang;
+        return $this->with(['descriptions' => function ($q) use ($lang) {
+            $q->where('lang', $lang);
+        }])->where('status', 1)->where('top', 1)->get();
+    }
+
+
     /**
      * Process list full cactegory
      *
