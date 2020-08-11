@@ -16,7 +16,7 @@ class ShopLinkController extends Controller
     public function __construct()
     {
         $this->arrTarget = ['_blank' => '_blank', '_self' => '_self'];
-        $this->arrGroup = ['menu' => 'Menu', 'footer' => 'Footer'];
+        $this->arrGroup = ['menu' => 'Menu', 'footer' => 'Footer','footer1' => 'Footer1','footer2' => 'Footer2'];
     }
     public function index()
     {

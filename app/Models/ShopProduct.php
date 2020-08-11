@@ -9,42 +9,48 @@ use App\Models\ShopProductDescription;
 use App\Models\ShopProductGroup;
 use App\Models\ShopProductPromotion;
 use App\Models\ShopTax;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Cache;
 use App\Models\ModelTrait;
+
 class ShopProduct extends Model
 {
     use ModelTrait;
-    public $table = SC_DB_PREFIX.'shop_product';
+    public $table = SC_DB_PREFIX . 'shop_product';
     protected $guarded = [];
 
     protected $connection = SC_CONNECTION;
 
-    protected  $sc_kind = 'all'; // 0:single, 1:bundle, 2:group
-    protected  $sc_virtual = 'all'; // 0:physical, 1:download, 2:only view, 3: Service
-    protected  $sc_promotion = 0; // 1: only produc promotion,
-    protected  $sc_array_ID = []; // array ID product
-    protected  $sc_category = []; // array category id
-    protected  $sc_brand = []; // array brand id
-    protected  $sc_supplier = []; // array supplier id
+    protected $sc_kind = 'all'; // 0:single, 1:bundle, 2:group
+    protected $sc_virtual = 'all'; // 0:physical, 1:download, 2:only view, 3: Service
+    protected $sc_promotion = 0; // 1: only produc promotion,
+    protected $sc_array_ID = []; // array ID product
+    protected $sc_category = []; // array category id
+    protected $sc_brand = []; // array brand id
+    protected $sc_supplier = []; // array supplier id
 
     public function brand()
     {
         return $this->belongsTo(ShopBrand::class, 'brand_id', 'id');
     }
+
     public function categories()
     {
         return $this->belongsToMany(ShopCategory::class, ShopProductCategory::class, 'product_id', 'category_id');
     }
+
     public function groups()
     {
         return $this->hasMany(ShopProductGroup::class, 'group_id', 'id');
     }
+
     public function builds()
     {
         return $this->hasMany(ShopProductBuild::class, 'build_id', 'id');
     }
+
     public function images()
     {
         return $this->hasMany(ShopProductImage::class, 'product_id', 'id');
@@ -55,14 +61,16 @@ class ShopProduct extends Model
         return $this->hasMany(ShopProductDescription::class, 'product_id', 'id');
     }
 
-    public function description(){
-        return $this->descriptions()->where('lang',app()->getLocale());
+    public function description()
+    {
+        return $this->descriptions()->where('lang', app()->getLocale());
     }
 
     public function promotionPrice()
     {
         return $this->hasOne(ShopProductPromotion::class, 'product_id', 'id');
     }
+
     public function attributes()
     {
         return $this->hasMany(ShopProductAttribute::class, 'product_id', 'id');
@@ -102,7 +110,7 @@ class ShopProduct extends Model
         $price = $this->price;
         $priceFinal = $this->getFinalPrice();
         // Process with tax
-        return  view('templates.'.sc_store('template').'.common.show_price', 
+        return view('templates.' . sc_store('template') . '.common.show_price',
             [
                 'price' => $price,
                 'priceFinal' => $priceFinal,
@@ -124,25 +132,25 @@ class ShopProduct extends Model
         $price = $this->price;
         $priceFinal = $this->getFinalPrice();
         // Process with tax
-        return  view('templates.'.sc_store('template').'.common.show_price_detail', 
-        [
-            'price' => $price,
-            'priceFinal' => $priceFinal,
-            'kind' => $this->kind,
-        ])->render();
+        return view('templates.' . sc_store('template') . '.common.show_price_detail',
+            [
+                'price' => $price,
+                'priceFinal' => $priceFinal,
+                'kind' => $this->kind,
+            ])->render();
     }
 
     /**
      * Get product detail
      * @param  [string] $key [description]
      * @param  [string] $type id, sku, alias
-     * @param  [''|int] $status 
+     * @param  [''|int] $status
      * '' if is all status
      * @return [type]     [description]
      */
-    public function getDetail($key = null, $type = null,  $status = 1)
+    public function getDetail($key = null, $type = null, $status = 1)
     {
-        if(empty($key)) {
+        if (empty($key)) {
             return null;
         }
         $tableDescription = (new ShopProductDescription)->getTable();
@@ -150,8 +158,8 @@ class ShopProduct extends Model
             ->leftJoin($tableDescription, $tableDescription . '.product_id', $this->getTable() . '.id')
             ->where($tableDescription . '.lang', sc_get_locale());
 
-        if(empty($type)) {
-            $product = $product->where('id', (int)$key);  
+        if (empty($type)) {
+            $product = $product->where('id', (int)$key);
         } elseif ($type == 'alias') {
             $product = $product->where('alias', $key);
         } elseif ($type == 'sku') {
@@ -159,10 +167,10 @@ class ShopProduct extends Model
         } else {
             return null;
         }
-        if($status) {
+        if ($status) {
             $product = $product->where('status', (int)$status);
         }
-        
+
         $product = $product
             ->with('images')
             ->with('promotionPrice');
@@ -237,18 +245,18 @@ class ShopProduct extends Model
 
     public function renderAttributeDetails()
     {
-        return  view('templates.'.sc_store('template').'.common.render_attribute', 
-        [
-            'details' => $this->attributes()->get()->groupBy('attribute_group_id'),
-            'groups' => ShopAttributeGroup::getList(),
-        ]);
+        return view('templates.' . sc_store('template') . '.common.render_attribute',
+            [
+                'details' => $this->attributes()->get()->groupBy('attribute_group_id'),
+                'groups' => ShopAttributeGroup::getList(),
+            ]);
     }
 
     /**
      * Render html option price in admin
      *
      * @param   [type]$currency  [$currency description]
-     * @param   nul   $rate      [$rate description]
+     * @param   nul $rate [$rate description]
      * @param   null             [ description]
      *
      * @return  [type]           [return description]
@@ -261,7 +269,7 @@ class ShopProduct extends Model
         foreach ($details as $groupId => $detailsGroup) {
             $html .= '<br><b><label>' . $groups[$groupId] . '</label></b>: ';
             foreach ($detailsGroup as $k => $detail) {
-                $valueOption = $detail->name.'__'.$detail->add_price;
+                $valueOption = $detail->name . '__' . $detail->add_price;
                 $html .= '<label class="radio-inline"><input ' . (($k == 0) ? "checked" : "") . ' type="radio" name="add_att[' . $this->id . '][' . $groupId . ']" value="' . $valueOption . '">' . sc_render_option_price($valueOption, $currency, $rate) . '</label> ';
             }
         }
@@ -276,15 +284,15 @@ class ShopProduct extends Model
     }
 
     /**
-    *Condition:
-    * -Active
-    * -In of stock or allow order out of stock
-    * -Date availabe
-    * -Not SC_PRODUCT_GROUP
-    */
+     *Condition:
+     * -Active
+     * -In of stock or allow order out of stock
+     * -Date availabe
+     * -Not SC_PRODUCT_GROUP
+     */
     public function allowSale()
     {
-        if(!sc_config('product_price')) {
+        if (!sc_config('product_price')) {
             return false;
         }
         if ($this->sc_status &&
@@ -344,11 +352,11 @@ class ShopProduct extends Model
     /**
      * Get list product
      *
-     * @param   array  $arrOpt
+     * @param   array $arrOpt
      * Example: ['status' => 1, 'top' => 1]
-     * @param   array  $arrSort
+     * @param   array $arrSort
      * Example: ['sortBy' => 'id', 'sortOrder' => 'asc']
-     * @param   array  $arrLimit  [$arrLimit description]
+     * @param   array $arrLimit [$arrLimit description]
      * Example: ['step' => 0, 'limit' => 20]
      * @return  [type]             [return description]
      */
@@ -360,12 +368,12 @@ class ShopProduct extends Model
         $limit = $arrLimit['limit'] ?? 0;
 
         $data = $this->sort($sortBy, $sortOrder);
-        if(count($arrOpt = [])) {
+        if (count($arrOpt = [])) {
             foreach ($arrOpt as $key => $value) {
                 $data = $data->where($key, $value);
             }
         }
-        if((int)$limit) {
+        if ((int)$limit) {
             $start = $step * $limit;
             $data = $data->offset((int)$start)->limit((int)$limit);
         }
@@ -382,13 +390,13 @@ class ShopProduct extends Model
      */
     public static function getListFull()
     {
-        if(sc_config('cache_status') && sc_config('cache_product')) {
+        if (sc_config('cache_status') && sc_config('cache_product')) {
             if (!Cache::has('cache_product')) {
-                Cache::put('cache_product', self::get()->keyBy('id')->toJson(), $seconds = sc_config('cache_time', 0)?:600);
+                Cache::put('cache_product', self::get()->keyBy('id')->toJson(), $seconds = sc_config('cache_time', 0) ?: 600);
             }
             return Cache::get('cache_product');
         } else {
-            return  self::get()->keyBy('id')->toJson();
+            return self::get()->keyBy('id')->toJson();
         }
     }
 
@@ -397,14 +405,16 @@ class ShopProduct extends Model
      *
      * @return  new model
      */
-    public function start() {
+    public function start()
+    {
         return new ShopProduct;
     }
-    
+
     /**
      * Set product kind
      */
-    private function setKind($kind) {
+    private function setKind($kind)
+    {
         if ($kind === 'all') {
             $this->sc_kind = $kind;
         } else {
@@ -416,7 +426,8 @@ class ShopProduct extends Model
     /**
      * Set virtual product
      */
-    private function setVirtual($virtual) {
+    private function setVirtual($virtual)
+    {
         if ($virtual === 'all') {
             $this->sc_virtual = $virtual;
         } else {
@@ -426,12 +437,13 @@ class ShopProduct extends Model
     }
 
     /**
-     * Set array category 
+     * Set array category
      *
-     * @param   [array|int]  $category 
+     * @param   [array|int]  $category
      *
      */
-    private function setCategory($category) {
+    private function setCategory($category)
+    {
         if (is_array($category)) {
             $this->sc_category = $category;
         } else {
@@ -441,12 +453,13 @@ class ShopProduct extends Model
     }
 
     /**
-     * Set array brand 
+     * Set array brand
      *
-     * @param   [array|int]  $brand 
+     * @param   [array|int]  $brand
      *
      */
-    private function setBrand($brand) {
+    private function setBrand($brand)
+    {
         if (is_array($brand)) {
             $this->sc_brand = $brand;
         } else {
@@ -456,21 +469,29 @@ class ShopProduct extends Model
     }
 
     /**
-     * Set product promotion 
+     * Set product promotion
      *
      */
-    private function setPromotion() {
+    private function setPromotion()
+    {
         $this->sc_promotion = 1;
         return $this;
     }
 
+    private function setAmazing()
+    {
+        $this->sc_amazing = 1;
+        return $this;
+    }
+
     /**
-     * Set array ID product 
+     * Set array ID product
      *
-     * @param   [array|int]  $arrID 
+     * @param   [array|int]  $arrID
      *
      */
-    private function setArrayID($arrID) {
+    private function setArrayID($arrID)
+    {
         if (is_array($arrID)) {
             $this->sc_array_ID = $arrID;
         } else {
@@ -479,14 +500,15 @@ class ShopProduct extends Model
         return $this;
     }
 
-    
+
     /**
-     * Set array supplier 
+     * Set array supplier
      *
-     * @param   [array|int]  $supplier 
+     * @param   [array|int]  $supplier
      *
      */
-    private function setSupplier($supplier) {
+    private function setSupplier($supplier)
+    {
         if (is_array($supplier)) {
             $this->sc_supplier = $supplier;
         } else {
@@ -498,14 +520,16 @@ class ShopProduct extends Model
     /**
      * Product hot
      */
-    public function getProductHot() {
+    public function getProductHot()
+    {
         return $this->getProductPromotion();
     }
 
     /**
      * Product build
      */
-    public function getProductBuild() {
+    public function getProductBuild()
+    {
         $this->setStatus(1);
         $this->setKind(SC_PRODUCT_BUILD);
         return $this;
@@ -514,7 +538,8 @@ class ShopProduct extends Model
     /**
      * Product group
      */
-    public function getProductGroup() {
+    public function getProductGroup()
+    {
         $this->setStatus(1);
         $this->setKind(SC_PRODUCT_GROUP);
         return $this;
@@ -523,7 +548,8 @@ class ShopProduct extends Model
     /**
      * Product single
      */
-    public function getProductSingle() {
+    public function getProductSingle()
+    {
         $this->setStatus(1);
         $this->setKind(SC_PRODUCT_SINGLE);
         return $this;
@@ -531,9 +557,10 @@ class ShopProduct extends Model
 
     /**
      * Get product to array Catgory
-     * @param   [array|int]  $arrCategory 
+     * @param   [array|int]  $arrCategory
      */
-    public function getProductToCategory($arrCategory) {
+    public function getProductToCategory($arrCategory)
+    {
         $this->setStatus(1);
         $this->setCategory($arrCategory);
         return $this;
@@ -541,19 +568,21 @@ class ShopProduct extends Model
 
     /**
      * Get product to array Brand
-     * @param   [array|int]  $arrBrand 
+     * @param   [array|int]  $arrBrand
      */
-    public function getProductToBrand($arrBrand) {
+    public function getProductToBrand($arrBrand)
+    {
         $this->setStatus(1);
         $this->setBrand($arrBrand);
         return $this;
     }
-    
+
     /**
      * Get product to array Supplier
-     * @param   [array|int]  $arrSupplier 
+     * @param   [array|int]  $arrSupplier
      */
-    public function getProductToSupplier($arrSupplier) {
+    public function getProductToSupplier($arrSupplier)
+    {
         $this->setStatus(1);
         $this->setSupplier($arrSupplier);
         return $this;
@@ -563,7 +592,8 @@ class ShopProduct extends Model
     /**
      * Get product latest
      */
-    public function getProductLatest() {
+    public function getProductLatest()
+    {
         $this->setStatus(1);
         $this->setLimit(10);
         $this->setSort(['id', 'desc']);
@@ -573,7 +603,8 @@ class ShopProduct extends Model
     /**
      * Get product last view
      */
-    public function getProductLastView() {
+    public function getProductLastView()
+    {
         $this->setStatus(1);
         $this->setLimit(10);
         $this->setSort(['date_available', 'desc']);
@@ -583,7 +614,8 @@ class ShopProduct extends Model
     /**
      * Get product best sell
      */
-    public function getProductBestSell() {
+    public function getProductBestSell()
+    {
         $this->setStatus(1);
         $this->setLimit(10);
         $this->setSort(['sold', 'desc']);
@@ -593,10 +625,19 @@ class ShopProduct extends Model
     /**
      * Get product promotion
      */
-    public function getProductPromotion() {
+    public function getProductPromotion()
+    {
         $this->setStatus(1);
         $this->setLimit(10);
         $this->setPromotion();
+        return $this;
+    }
+
+    public function getProductAmazing()
+    {
+        $this->setStatus(1);
+        $this->setLimit(10);
+        $this->setAmazing();
         return $this;
     }
 
@@ -607,9 +648,10 @@ class ShopProduct extends Model
      *
      * @return  [type]          [return description]
      */
-    public function getProductFromListID($arrID) {
+    public function getProductFromListID($arrID)
+    {
         $this->setStatus(1);
-        if(is_array($arrID)) {
+        if (is_array($arrID)) {
             $this->setArrayID($arrID);
         }
         return $this;
@@ -618,7 +660,8 @@ class ShopProduct extends Model
     /**
      * build Query
      */
-    public function buildQuery() {
+    public function buildQuery()
+    {
 
         $tableDescription = (new ShopProductDescription)->getTable();
 
@@ -627,12 +670,12 @@ class ShopProduct extends Model
             ->leftJoin($tableDescription, $tableDescription . '.product_id', $this->getTable() . '.id')
             ->where($tableDescription . '.lang', sc_get_locale());
         //search keyword
-        if ($this->sc_keyword !='') {
-            $query = $query->where(function ($sql) use($tableDescription){
+        if ($this->sc_keyword != '') {
+            $query = $query->where(function ($sql) use ($tableDescription) {
                 $sql->where($tableDescription . '.name', 'like', '%' . $this->sc_keyword . '%')
-                ->orWhere($tableDescription . '.keyword', 'like', '%' . $this->sc_keyword . '%')
-                ->orWhere($tableDescription . '.description', 'like', '%' . $this->sc_keyword . '%')
-                ->orWhere($this->getTable() . '.sku', 'like', '%' . $this->sc_keyword . '%');
+                    ->orWhere($tableDescription . '.keyword', 'like', '%' . $this->sc_keyword . '%')
+                    ->orWhere($tableDescription . '.description', 'like', '%' . $this->sc_keyword . '%')
+                    ->orWhere($this->getTable() . '.sku', 'like', '%' . $this->sc_keyword . '%');
             });
         }
 
@@ -642,19 +685,37 @@ class ShopProduct extends Model
             $query = $query->join(
                 $tablePromotion,
                 $this->getTable() . '.id', '=', $tablePromotion . '.product_id')
-                ->where($tablePromotion . '.status_promotion', 1)
-                ->where(function ($query) use($tablePromotion){
+                ->where([[$tablePromotion . '.status_promotion', 1], [$tablePromotion . '.is_amazing', 0]])
+                ->where(function ($query) use ($tablePromotion) {
                     $query->where($tablePromotion . '.date_end', '>=', date("Y-m-d"))
                         ->orWhereNull($tablePromotion . '.date_end');
                 })
-                ->where(function ($query) use($tablePromotion){
+                ->where(function ($query) use ($tablePromotion) {
                     $query->where($tablePromotion . '.date_start', '<=', date("Y-m-d"))
                         ->orWhereNull($tablePromotion . '.date_start');
                 });
         }
 
+        //Promotion
+        if ($this->sc_amazing == 1) {
+            $now = Carbon::now()->toTimeString();
+            $tablePromotion = (new ShopProductPromotion)->getTable();
+            $query = $query->join(
+                $tablePromotion,
+                $this->getTable() . '.id', '=', $tablePromotion . '.product_id')
+                ->where([[$tablePromotion . '.is_amazing', 1], [$tablePromotion . '.status_promotion', 1]])
+                ->where(function ($query) use ($tablePromotion, $now) {
+                    $query->where([[$tablePromotion . '.date_end', '>=', date("Y-m-d")], [$tablePromotion . '.end_time', '>=', $now]])
+                        ->orWhereNull($tablePromotion . '.date_end');
+                })
+                ->where(function ($query) use ($tablePromotion, $now) {
+                    $query->where([[$tablePromotion . '.date_start', '<=', date("Y-m-d")], [$tablePromotion . '.start_time', '<=', $now]])
+                        ->orWhereNull($tablePromotion . '.date_start');
+                });
+        }
+
         $query = $query->with('promotionPrice');
-            
+
 
         if (count($this->sc_category)) {
             $query = $query->leftJoin((new ShopProductCategory)->getTable(), (new ShopProductCategory)->getTable() . '.product_id', $this->getTable() . '.id');
@@ -673,7 +734,7 @@ class ShopProduct extends Model
             $query = $query->where('kind', $this->sc_kind);
         }
 
-        
+
         if ($this->sc_virtual !== 'all') {
             $query = $query->where('virtual', $this->sc_virtual);
         }
@@ -684,19 +745,19 @@ class ShopProduct extends Model
 
         if (count($this->sc_supplier)) {
 
-            foreach ($this->sc_supplier as  $supplier_id) {
-                $query = $query->where(function($query) use($supplier_id){
-                $query->where('supplier_id', $supplier_id)
-                      ->orWhere('supplier_id', 'like', $supplier_id.',%')
-                      ->orWhere('supplier_id', 'like', '%,'.$supplier_id.',%')
-                      ->orWhere('supplier_id', 'like', '%,'.$supplier_id);
+            foreach ($this->sc_supplier as $supplier_id) {
+                $query = $query->where(function ($query) use ($supplier_id) {
+                    $query->where('supplier_id', $supplier_id)
+                        ->orWhere('supplier_id', 'like', $supplier_id . ',%')
+                        ->orWhere('supplier_id', 'like', '%,' . $supplier_id . ',%')
+                        ->orWhere('supplier_id', 'like', '%,' . $supplier_id);
                 });
             }
         }
 
         if (count($this->sc_moreWhere)) {
             foreach ($this->sc_moreWhere as $key => $where) {
-                if(count($where)) {
+                if (count($where)) {
                     $query = $query->where($where[0], $where[1], $where[2]);
                 }
             }
@@ -706,8 +767,8 @@ class ShopProduct extends Model
             $query = $query->inRandomOrder();
         } else {
             if (is_array($this->sc_sort) && count($this->sc_sort)) {
-                foreach ($this->sc_sort as  $rowSort) {
-                    if(is_array($rowSort) && count($rowSort) == 2) {
+                foreach ($this->sc_sort as $rowSort) {
+                    if (is_array($rowSort) && count($rowSort) == 2) {
                         $query = $query->sort($rowSort[0], $rowSort[1]);
                     }
                 }
@@ -727,15 +788,17 @@ class ShopProduct extends Model
      *
      * @return  [type]  [return description]
      */
-    public function getTaxId() {
-        if(!ShopTax::checkStatus()) {
+
+    public function getTaxId()
+    {
+        if (!ShopTax::checkStatus()) {
             return 0;
         }
-        if($this->tax_id == 'auto') {
+        if ($this->tax_id == 'auto') {
             return ShopTax::checkStatus();
         } else {
             $arrTaxList = ShopTax::getList();
-            if($this->tax_id == 0 || !$arrTaxList->has($this->tax_id)) {
+            if ($this->tax_id == 0 || !$arrTaxList->has($this->tax_id)) {
                 return 0;
             }
         }
@@ -747,9 +810,10 @@ class ShopProduct extends Model
      *
      * @return  [type]  [return description]
      */
-    public function getTaxValue() {
+    public function getTaxValue()
+    {
         $taxId = $this->getTaxId();
-        if($taxId) {
+        if ($taxId) {
             $arrValue = ShopTax::getArrayValue();
             return $arrValue[$taxId] ?? 0;
         } else {

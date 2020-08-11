@@ -137,10 +137,16 @@
                                 <div class="col-12 col-sm-4">
                                     <p class="title"><a href="#">راهنمای خرید از دیجی کیان</a></p>
                                     <div class="other-link">
+
                                         <ul>
-                                            <li><a href="#">نحوه ثبت سفارش</a></li>
-                                            <li><a href="#">رویه ارسال سفارش</a></li>
-                                            <li><a href="#">شیوه‌های پرداخت</a></li>
+                                            @if (!empty($layoutsUrl['footer']))
+                                                @foreach ($layoutsUrl['footer'] as $url)
+                                                    <li>
+                                                        <a {{ ($url->target =='_blank')?'target=_blank':''  }}
+                                                           href="{{ sc_url_render($url->url) }}">{{ sc_language_render($url->name) }}</a>
+                                                    </li>
+                                                    @endforeach
+                                                @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -148,10 +154,14 @@
                                     <p class="title"><a href="#">خدمات مشتریان</a></p>
                                     <div class="other-link">
                                         <ul>
-                                            <li><a href="#">پاسخ به پرسش‌های متداول</a></li>
-                                            <li><a href="#">رویه‌های بازگرداندن کالا</a></li>
-                                            <li><a href="#">شرایط استفاده</a></li>
-                                            <li><a href="#">حریم خصوصی</a></li>
+                                            @if (!empty($layoutsUrl['footer1']))
+                                                @foreach ($layoutsUrl['footer1'] as $url)
+                                                    <li>
+                                                        <a {{ ($url->target =='_blank')?'target=_blank':''  }}
+                                                           href="{{ sc_url_render($url->url) }}">{{ sc_language_render($url->name) }}</a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -159,11 +169,14 @@
                                     <p class="title"><a href="#">با دیجی کیان</a></p>
                                     <div class="other-link">
                                         <ul>
-                                            <li><a href="#">فروش در دیجی کیان</a></li>
-                                            <li><a href="#">همکاری با سازمان‌ها</a></li>
-                                            <li><a href="#">فرصت‌های شغلی</a></li>
-                                            <li><a href="#">تماس با دیجی کیان</a></li>
-                                            <li><a href="#">درباره دیجی کیان</a></li>
+                                            @if (!empty($layoutsUrl['footer2']))
+                                                @foreach ($layoutsUrl['footer2'] as $url)
+                                                    <li>
+                                                        <a {{ ($url->target =='_blank')?'target=_blank':''  }}
+                                                           href="{{ sc_url_render($url->url) }}">{{ sc_language_render($url->name) }}</a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -193,9 +206,10 @@
                                 <div class="col-md-6 col-lg-12 social">
                                     <p>دیجی کیان را در شبکه‌های اجتماعی دنبال کنید:</p>
                                     <div class="flex">
+                                        @if(sc_store('instagram') != null)
                                         <div class="item">
                                             <div class="item-social instagram">
-                                                <a href="#" target="_blank">
+                                                <a href="{{sc_store('instagram')}}" target="_blank">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                          viewBox="0 0 28 28">
                                                         <g fill="#FFF" fill-rule="evenodd">
@@ -206,9 +220,11 @@
                                                     اینستاگرام دیجی کیان</a>
                                             </div>
                                         </div>
+                                        @endif
+                                            @if(sc_store('telegram') != null)
                                         <div class="item">
                                             <div class="item-social telegram">
-                                                <a href="#" target="_blank">
+                                                <a href="{{sc_store('telegram')}}" target="_blank">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                          xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                                                          id="Layer_1" x="0px" y="0px" viewBox="0 0 485 485"
@@ -237,6 +253,7 @@
                                                     تلگرام دیجی کیان</a>
                                             </div>
                                         </div>
+                                            @endif
                                     </div>
                                 </div>
                                 <!--End Social-->
@@ -250,10 +267,13 @@
                         <!--Contact Us-->
                         <div class="col-md-8">
                             <div class="contact">
-                                <p>هفت روز هفته ، ۲۴ ساعت شبانه‌روز پاسخگوی شما هستیم</p>
+                                <p>{{ trans('front.shop_info.address') }}: {{ sc_store('address') }}</p>
                                 <ul>
-                                    <li>شماره تماس :<a href="tel:02123450000">۲۳۴۵۰۰۰۰ - ۰۲۱</a></li>
-                                    <li>آدرس ایمیل :<a href="mailto:info@digikian.com">info@digikian.com</a></li>
+                                    <li>شماره تماس :<a href="tel:02123450000">{{ trans('front.shop_info.hotline') }}
+                                            : {{ sc_store('long_phone') }}</a></li>
+                                    <li>آدرس ایمیل :<a
+                                                href="mailto:info@digikian.com">{{ trans('front.shop_info.email') }}
+                                            : {{ sc_store('email') }}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -261,8 +281,16 @@
                         <!--App-->
                         <div class="col-md-4">
                             <div class="app">
-                                <a href="#"><img src="asset/files/app/001.png" class="img-fluid" alt=""></a>
-                                <a href="#"><img src="asset/files/app/002.png" class="img-fluid" alt=""></a>
+                                @if(sc_store('android_app') != null)
+                                    <a href="{{sc_store('android_app')}}"><img
+                                                src="{{asset($templateFile.'/asset/files/app/001.png')}}"
+                                                class="img-fluid" alt=""></a>
+                                @endif
+                                @if(sc_store('ios_app') != null)
+                                    <a href="{{sc_store('ios_app')}}"><img
+                                                src="{{asset($templateFile.'/asset/files/app/002.png')}}"
+                                                class="img-fluid" alt=""></a>
+                                @endif
                             </div>
                         </div>
                         <!--End App-->
@@ -294,29 +322,35 @@
                     <!--namad-->
                     <div class="namad py-2 py-md-3">
                         <ul class="justify-content-center justify-content-lg-end">
-                            <li><a href="#"><img src="asset/files/namad/001.png" class="img-fluid" alt=""></a></li>
-                            <li><a href="#"><img src="asset/files/namad/002.png" class="img-fluid" alt=""></a></li>
-                            <li><a href="#"><img src="asset/files/namad/003.png" class="img-fluid" alt=""></a></li>
+                            @if(sc_store('enamad') != null)
+                              {!! sc_store('enamad') !!}
+                            @endif
+                            @if(sc_store('country_union') != null)
+                              {!! sc_store('country_union')  !!}
+                            @endif
+                            @if(sc_store('samandehi') != null)
+                            {!! sc_store('samandehi') !!}
+                            @endif
                         </ul>
                     </div>
                     <!--End namad-->
                 </div>
-                <div class="col-lg-12">
-                    <!--Partners-->
-                    <div class="partners py-2 py-md-3">
-                        <ul>
-                            <li><a href="#" target="_blank"><img src="asset/files/company/001.png"
-                                                                 class="img-fluid"></a></li>
-                            <li><a href="#" target="_blank"><img src="asset/files/company/002.png"
-                                                                 class="img-fluid"></a></li>
-                            <li><a href="#" target="_blank"><img src="asset/files/company/003.png"
-                                                                 class="img-fluid"></a></li>
-                            <li><a href="#" target="_blank"><img src="asset/files/company/004.png"
-                                                                 class="img-fluid"></a></li>
-                        </ul>
-                    </div>
-                    <!--End Partners-->
-                </div>
+                {{--<div class="col-lg-12">--}}
+                    {{--<!--Partners-->--}}
+                    {{--<div class="partners py-2 py-md-3">--}}
+                        {{--<ul>--}}
+                            {{--<li><a href="#" target="_blank"><img src="asset/files/company/001.png"--}}
+                                                                 {{--class="img-fluid"></a></li>--}}
+                            {{--<li><a href="#" target="_blank"><img src="asset/files/company/002.png"--}}
+                                                                 {{--class="img-fluid"></a></li>--}}
+                            {{--<li><a href="#" target="_blank"><img src="asset/files/company/003.png"--}}
+                                                                 {{--class="img-fluid"></a></li>--}}
+                            {{--<li><a href="#" target="_blank"><img src="asset/files/company/004.png"--}}
+                                                                 {{--class="img-fluid"></a></li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                    {{--<!--End Partners-->--}}
+                {{--</div>--}}
             </div>
             <div class="row ">
                 <div class="col-12">
@@ -344,19 +378,27 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script type="text/javascript" src="{{ asset($templateFile.'/node_modules/jquery/dist/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset($templateFile.'/node_modules/popper.js/dist/umd/popper.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/bootstrap-v4-rtl/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/bootstrap-v4-rtl/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/slick-carousel/slick/slick.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/shave/dist/shave.min.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/jQuery.counter/src/jquery.counter.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/nouislider/distribute/nouislider.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/jQuery.counter/src/jquery.counter.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/nouislider/distribute/nouislider.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/wnumb/wNumb.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/select2/dist/js/select2.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/select2/dist/js/i18n/fa.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/elevatezoom-master/jquery.elevatezoom.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/lightgallery.js/dist/js/lightgallery.min.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/lg-thumbnail.js/dist/lg-thumbnail.min.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/lg-autoplay.js/dist/lg-autoplay.min.js')}}"></script>
-<script type="text/javascript" src="{{asset($templateFile.'/node_modules/lg-fullscreen.js/dist/lg-fullscreen.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/elevatezoom-master/jquery.elevatezoom.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/lightgallery.js/dist/js/lightgallery.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/lg-thumbnail.js/dist/lg-thumbnail.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/lg-autoplay.js/dist/lg-autoplay.min.js')}}"></script>
+<script type="text/javascript"
+        src="{{asset($templateFile.'/node_modules/lg-fullscreen.js/dist/lg-fullscreen.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/lg-zoom.js/dist/lg-zoom.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/lg-video.js/dist/lg-video.min.js')}}"></script>
 <script type="text/javascript" src="{{asset($templateFile.'/node_modules/highcharts/highcharts.js')}}"></script>

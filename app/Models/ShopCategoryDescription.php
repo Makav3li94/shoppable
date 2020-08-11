@@ -12,4 +12,8 @@ class ShopCategoryDescription extends Model
     public $table = SC_DB_PREFIX.'shop_category_description';
     protected $connection = SC_CONNECTION;
     protected $guarded    = [];
+
+    public function category(){
+        return $this->belongsTo(ShopCategory::class);
+    }
 }

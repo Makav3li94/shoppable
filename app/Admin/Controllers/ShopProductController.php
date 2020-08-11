@@ -421,6 +421,9 @@ class ShopProductController extends Controller
             $arrPromotion['price_promotion'] = $data['price_promotion'];
             $arrPromotion['date_start'] = $data['price_promotion_start'] ? $data['price_promotion_start'] : null;
             $arrPromotion['date_end'] = $data['price_promotion_end'] ? $data['price_promotion_end'] : null;
+            $arrPromotion['start_time'] = $data['start_time'] ? $data['start_time'] : null;
+            $arrPromotion['end_time'] = $data['end_time'] ? $data['end_time'] : null;
+            $arrPromotion['is_amazing'] = isset($data['is_amazing']) ? 1 : 0 ;
             $product->promotionPrice()->create($arrPromotion);
         }
 
@@ -567,6 +570,7 @@ class ShopProductController extends Controller
  */
     public function postEdit($id)
     {
+
         $product = ShopProduct::find($id);
         $data = request()->all();
         $langFirst = array_key_first(sc_language_all()->toArray()); //get first code language active
@@ -697,6 +701,9 @@ class ShopProductController extends Controller
             $arrPromotion['price_promotion'] = $data['price_promotion'];
             $arrPromotion['date_start'] = $data['price_promotion_start'] ? $data['price_promotion_start'] : null;
             $arrPromotion['date_end'] = $data['price_promotion_end'] ? $data['price_promotion_end'] : null;
+            $arrPromotion['start_time'] = $data['start_time'] ? $data['start_time'] : null;
+            $arrPromotion['end_time'] = $data['end_time'] ? $data['end_time'] : null;
+            $arrPromotion['is_amazing'] = isset($data['is_amazing'])  ? 1 : 0 ;
             $product->promotionPrice()->create($arrPromotion);
         }
 

@@ -20,8 +20,6 @@
            </tr>
          </thead>
          <tbody>
-
-
       <tr>
         <td>{{ trans('store_info.logo') }}
                <span class="input-group-btn">
@@ -78,6 +76,45 @@
         <td><a href="#" class="fied-required editable editable-click" data-name="email" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.email') }}" data-value="{{ $infos->email }}" data-original-title="" title="">{{$infos->email }}</a></td>
       </tr>
 
+
+      <tr>
+          <td>{{ trans('store_info.insta') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="instagram" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.insta') }}" data-value="{{ $infos->instagram }}" data-original-title="" title="">{{$infos->instagram }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.samandehi') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="samandehi" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.telegram') }}" data-value="{{ $infos->samandehi }}" data-original-title="" title="">{{$infos->samandehi }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.android') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="android_app" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.android') }}" data-value="{{ $infos->android_app }}" data-original-title="" title="">{{$infos->android_app }}</a></td>
+      </tr>
+      <tr>
+          <td>{{ trans('store_info.ios') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="ios_app" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.ios') }}" data-value="{{ $infos->ios_app }}" data-original-title="" title="">{{$infos->ios_app }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.telegram') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="telegram" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.telegram') }}" data-value="{{ $infos->telegram }}" data-original-title="" title="">{{$infos->telegram }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.enamad') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="enamad" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.telegram') }}" data-value="{{ $infos->enamad }}" data-original-title="" title="">{{$infos->enamad }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.union') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="country_union" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.telegram') }}" data-value="{{ $infos->country_union }}" data-original-title="" title="">{{$infos->country_union }}</a></td>
+      </tr>
+
+      <tr>
+          <td>{{ trans('store_info.samandehi') }}</td>
+          <td><a href="#" class="fied-required editable editable-click" data-name="samandehi" data-type="text" data-pk="" data-source="" data-url="{{ route('admin_store_info.update') }}" data-title="{{ trans('store_info.telegram') }}" data-value="{{ $infos->samandehi }}" data-original-title="" title="">{{$infos->samandehi }}</a></td>
+      </tr>
     </td>
   </tr>
 

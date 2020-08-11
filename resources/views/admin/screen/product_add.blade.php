@@ -462,8 +462,9 @@
                                     <label for="price"
                                            class="col-sm-2 col-form-label">{{ trans('product.price_promotion') }}</label>
                                     <div class="col-sm-8">
-                                        @if (old('price_promotion'))
-                                            <div class="price_promotion">
+
+                                        {{--@if (old('price_promotion'))--}}
+                                            <div class="price_promotion" style="display: none">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i
                                                                 class="fa fa-pencil fa-fw"></i></span>
@@ -472,8 +473,8 @@
                                                            value="{!! old('price_promotion')??0 !!}"
                                                            class="form-control input-sm price" placeholder=""/>
                                                     <span title="Remove"
-                                                          class="btn btn-flat btn-sm btn-danger removePromotion"><i
-                                                                class="fa fa-times"></i></span>
+                                                          class="btn btn-flat btn-sm btn-danger removePromotion">
+                                                        <i class="fa fa-times"></i></span>
                                                 </div>
 
                                                 <div class="form-inline">
@@ -486,7 +487,7 @@
                                                                    id="price_promotion_start"
                                                                    name="price_promotion_start"
                                                                    value="{!!old('price_promotion_start')!!}"
-                                                                   class="form-control input-sm price_promotion_start date_time"
+                                                                   class="form-control input-sm date_available date_time"
                                                                    placeholder=""/>
                                                         </div>
                                                     </div>
@@ -500,22 +501,60 @@
                                                                    id="price_promotion_end"
                                                                    name="price_promotion_end"
                                                                    value="{!!old('price_promotion_end')!!}"
-                                                                   class="form-control input-sm price_promotion_end date_time"
+                                                                   class="form-control input-sm date_available date_time"
                                                                    placeholder=""/>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="form-inline">
+                                                    <div class="input-group">
+                                                        {{trans("product.price_promotion_time_start")}}<br>
+                                                        <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-clock-o fa-fw"></i>
+                                                </span>
+                                                            <input type="text"
+                                                                   class="form-control input-sm timepickeralt clockpicker"
+                                                                   placeholder=""
+                                                                   value="{!!old('start_time'?? '')!!}"
+                                                                   name="start_time">
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        {{trans("product.price_promotion_time_end")}}<br>
+                                                        <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-clock-o fa-fw"></i>
+                                                </span>
+                                                            <input type="text"
+                                                                   class="form-control input-sm timepickeralt clockpicker"
+                                                                   placeholder="{!!old('end_time' ?? '')!!}"
+                                                                   name="end_time">
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        {{ trans('product.is_amazing') }}<br>
+                                                        <div class="input-group">
+                                                            <input type="checkbox" name="is_amazing" value="on" {{ old('is_amazing')?'checked':''}}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                        @else
+
+
+                                        {{--@else--}}
                                             <button type="button" id="add_product_promotion"
                                                     class="btn btn-flat btn-success">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 {{ trans('product.admin.add_product_promotion') }}
                                             </button>
-                                        @endif
+                                        {{--@endif--}}
 
                                     </div>
                                 </div>
+
                                 {{-- //price promotion --}}
                             @endif
 
@@ -1399,7 +1438,7 @@
         }
 
         @if($kindOpt == '')
-    
+
         #main-add, #box-footer {
             display: none;
         }
@@ -1410,7 +1449,7 @@
         }
 
         .kind{{ $kindOpt }}
-         {
+            {
             display: block;
         }
 
@@ -1420,25 +1459,81 @@
             margin: 10px 0;
         }
     </style>
-
 @endpush
 
 @push('scripts')
     @include('admin.component.ckeditor_js')
-
     <script type="text/javascript">
         // Promotion
         $('#add_product_promotion').click(function (event) {
-            $(this).before('<div class="price_promotion"><div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span><input type="number" style="width: 100px;"  id="price_promotion" name="price_promotion" value="0" class="form-control input-sm price" placeholder="" /><span title="Remove" class="btn btn-flat btn-sm btn-danger removePromotion"><i class="fa fa-times"></i></span></div><div class="form-inline"><div class="input-group">{{ trans('product.price_promotion_start') }}<br><div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span><input type="text" style="width: 100px;"  id="price_promotion_start" name="price_promotion_start" value="" class="form-control input-sm price_promotion_start date_time" placeholder="" /></div></div><div class="input-group">{{ trans('product.price_promotion_end') }}<br><div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span><input type="text" style="width: 100px;"  id="price_promotion_end" name="price_promotion_end" value="" class="form-control input-sm price_promotion_end date_time" placeholder="" /></div></div></div></div>');
+            $(this).before('<div class="price_promotion">\n' +
+                '    <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span><input\n' +
+                '            type="number" style="width: 100px;" id="price_promotion" name="price_promotion" value="0"\n' +
+                '            class="form-control input-sm price" placeholder="" /><span title="Remove"\n' +
+                '            class="btn btn-flat btn-sm btn-danger removePromotion"><i class="fa fa-times"></i></span></div>\n' +
+                '    <div class="form-inline">\n' +
+                '        <div class="input-group">{{ trans("product.price_promotion_start") }}<br>\n' +
+                '            <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span><input\n' +
+                '                    type="text" style="width: 100px;" id="price_promotion_start" name="price_promotion_start" value=""\n' +
+                '                    class="form-control input-sm date_available new_date_time" placeholder="" /></div>\n' +
+                '        </div>\n' +
+                '        <div class="input-group">{{ trans("product.price_promotion_end") }}<br>\n' +
+                '            <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span><input\n' +
+                '                    type="text" style="width: 100px;" id="price_promotion_end" name="price_promotion_end" value=""\n' +
+                '                    class="form-control input-sm date_available new_date_time" placeholder="" /></div>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '    <div class="form-inline">\n' +
+                '        <div class="input-group">\n' +
+                '            {{trans("product.price_promotion_time_start")}}<br>\n' +
+                '            <div class="input-group">\n' +
+                '                <span class="input-group-addon">\n' +
+                '                    <i class="fa fa-time fa-fw"></i>\n' +
+                '                </span>\n' +
+                '                <input type="text" class="form-control input-sm  timepickeralt clockpicker" placeholder="" name="start_time">\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '\n' +
+                '        <div class="input-group">\n' +
+                '            {{trans("product.price_promotion_time_end")}}<br>\n' +
+                '            <div class="input-group">\n' +
+                '                <span class="input-group-addon">\n' +
+                '                    <i class="fa fa-time fa-fw"></i>\n' +
+                '                </span>\n' +
+                '                <input type="text" class="form-control input-sm timepickeralt clockpicker" placeholder="" name="end_time">\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '\n' +
+                '        <div class="input-group">\n' +
+                '            {{trans("product.is_amazing")}}<br>\n' +
+                '            <div class="input-group">\n' +
+                '                <input  type="checkbox" name="is_amazing" value="on">\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>');
             $(this).hide();
             $('.removePromotion').click(function (event) {
                 $(this).closest('.price_promotion').remove();
                 $('#add_product_promotion').show();
             });
-            $('.date_time').datepicker({
+
+            $('.new_date_time').change();
+
+            $('.new_date_time').datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
-            })
+            });
+            $('.timepickeralt').clockpicker({
+                placement: 'top',
+                donetext: 'انتخاب',
+                autoclose: true,
+                afterDone: function () {
+                    var val = $('.timepickeralt:focus').val();
+                    var converted = toPersianNum(val);
+                    $('.timepickeralt:focus').val(converted);
+                }
+            });
         });
         $('.removePromotion').click(function (event) {
             $('#add_product_promotion').show();
@@ -1562,9 +1657,9 @@
         );
 
     </script>
-    <script src="{{ asset('admin/plugin/dynatree/js/jquery.min.js')}}"></script>
-    <script src="{{ asset('admin/plugin/dynatree/js/jquery-ui.custom.min.js')}}"></script>
-    <script src="{{ asset('admin/plugin/dynatree/js/jquery.cookie.js')}}"></script>
+    {{--<script src="{{ asset('admin/plugin/dynatree/js/jquery.min.js')}}"></script>--}}
+    {{--<script src="{{ asset('admin/plugin/dynatree/js/jquery-ui.custom.min.js')}}"></script>--}}
+    {{--<script src="{{ asset('admin/plugin/dynatree/js/jquery.cookie.js')}}"></script>--}}
     <script src="{{ asset('admin/plugin/dynatree/js/jquery.dynatree.js')}}"></script>
     <script>
         $(function () {
@@ -1606,4 +1701,5 @@
             }
         });
     </script>
+
 @endpush

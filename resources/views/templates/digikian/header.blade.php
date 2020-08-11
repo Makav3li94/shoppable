@@ -111,9 +111,7 @@
                             <!--Search-->
                             <form action="">
                                 <div class="input-group">
-                                    <input onclick="$(this).addClass('active');$('.result-search').slideDown(); $('#mask-gray-body').toggleClass('active')"
-                                           onblur="$(this).removeClass('active');$('.result-search').slideUp();"
-                                           type="text" class="form-control"
+                                    <input type="text" class="form-control" id="search-input"
                                            placeholder="نام محصول برند و یا دسته مورد علاقه خود را جستجو کنید…">
                                     <div class="input-group-append">
                                         <button class="btn btn-danger" type="button">
@@ -148,21 +146,21 @@
 
                             <!--Result Search Desktop-->
                             <div class="result-search">
-                                <div class="result-search-category">
-                                    <ul>
-                                        <li><a href="#">کنسول در دسته <strong>کنسول خانگی</strong></a></li>
-                                        <li><a href="#">همه کالاها دسته‌بندی <strong>کنسول</strong></a></li>
-                                    </ul>
-                                </div>
-                                <div class="result-search-item">
-                                    <ul>
-                                        <li><a href="#">کنسول بازی</a></li>
-                                        <li><a href="#">کنسول بازی سونی</a></li>
-                                        <li><a href="#">کنسول بازی سونی مدل</a></li>
-                                        <li><a href="#">کنسول بازی سونی مدل playstation</a></li>
-                                        <li><a href="#">کنسول بازی سونی مدل playstation 4</a></li>
-                                    </ul>
-                                </div>
+                                {{--<div class="result-search-category">--}}
+                                {{--<ul>--}}
+                                {{--<li><a href="#">کنسول در دسته <strong>کنسول خانگی</strong></a></li>--}}
+                                {{--<li><a href="#">همه کالاها دسته‌بندی <strong>کنسول</strong></a></li>--}}
+                                {{--</ul>--}}
+                                {{--</div>--}}
+                                {{--<div class="result-search-item">--}}
+                                {{--<ul>--}}
+                                {{--<li><a href="#">کنسول بازی</a></li>--}}
+                                {{--<li><a href="#">کنسول بازی سونی</a></li>--}}
+                                {{--<li><a href="#">کنسول بازی سونی مدل</a></li>--}}
+                                {{--<li><a href="#">کنسول بازی سونی مدل playstation</a></li>--}}
+                                {{--<li><a href="#">کنسول بازی سونی مدل playstation 4</a></li>--}}
+                                {{--</ul>--}}
+                                {{--</div>--}}
                             </div>
                             <!--End Result Search Desktop-->
                         </div>
@@ -256,7 +254,7 @@
                                 @php
                                     $cart = Cart::instance('default')->content();
                                 @endphp
-                                <div class="top">
+                                    <div class="top">
                                     <p>مبلغ کل خرید:<span>۲۹۲,۰۰۰ تومان</span></p>
                                     <a href="add-to-cart.html">مشاهده سبد خرید<span class="basket-arrow"></span></a>
                                 </div>
@@ -269,17 +267,22 @@
                                         @endphp
                                         <div class="item">
                                             <div class="box-right">
-                                                <a onClick="return confirm('مطمئنید ؟')" title="Remove Item" alt="Remove Item" class=" delete" href="{{route("cart.remove",['id'=>$item->rowId])}}"><i class="mdi mdi-close"></i></a>
+                                                <a onClick="return confirm('مطمئنید ؟')" title="Remove Item"
+                                                   alt="Remove Item" class=" delete"
+                                                   href="{{route("cart.remove",['id'=>$item->rowId])}}"><i
+                                                            class="mdi mdi-close"></i></a>
                                                 <a class="thumb" href="{{$product->getUrl() }}">
-                                                    <img src="{{asset($product->getImage())}}" alt="{{ $product->name }}"></a>
+                                                    <img src="{{asset($product->getImage())}}"
+                                                         alt="{{ $product->name }}"></a>
                                             </div>
                                             <div class="box-left">
                                                 <a href="#" class="title">{{$product->name}}</a>
                                                 <p class="desc"><span>{{$item->qty}} عدد</span>
                                                     @if ($item->options->count())
-                                                    @foreach ($item->options as $groupAtt => $att)
-                                                        <span>{{ $attributesGroup[$groupAtt] }} : {!! sc_render_option_price($att) !!}</span>
-                                                    @endforeach
+                                                        @foreach ($item->options as $groupAtt => $att)
+                                                            <span>{{ $attributesGroup[$groupAtt] }}
+                                                                : {!! sc_render_option_price($att) !!}</span>
+                                                        @endforeach
                                                     @endif
                                                 </p>
                                             </div>
@@ -509,3 +512,55 @@
     </section>
     <!--End Section Menu and Sub Menu and Promotions-->
 </header>
+@push('scripts')
+    <script>
+
+        // var typingTimer;                //timer identifier
+        // var doneTypingInterval = 2000;  //time in ms (5 seconds)
+        //
+        // //on keyup, start the countdown
+        // $('#search-input').keyup(function () {
+        //     clearTimeout(typingTimer);
+        //     var value = $(this).val();
+        //         if ($('#search-input').val()) {
+        //             typingTimer = setTimeout(ajax_search(value), doneTypingInterval);
+        //         }
+        // });
+
+        var timeout = null;
+
+        $('#search-input').keyup(function () {
+            var value = $(this).val();
+            clearTimeout(timeout);
+            if (value.length > 3) {
+                timeout = setTimeout(function () {
+                    ajax_search(value)
+                }, 500);
+            }
+        });
+
+        function ajax_search(value) {
+            $.ajax({
+                url: '{{ route('ajax_search') }}',
+                type: 'get',
+                dataType: 'json',
+                async: false,
+                cache: false,
+                data: {
+                    val: value,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+
+                    console.log(data);
+                    $('.result-search').html(data);
+                    $('#search-input').addClass('active');
+                    $('.result-search').slideDown();
+                    $('#mask-gray-body').toggleClass('active');
+
+                }
+            });
+        }
+    </script>
+@endpush
+

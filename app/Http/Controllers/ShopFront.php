@@ -20,6 +20,7 @@ class ShopFront extends GeneralController
     {
         parent::__construct();
     }
+
     /**
      * Home page
      * @return [view]
@@ -28,10 +29,10 @@ class ShopFront extends GeneralController
     {
         $lang = app()->getLocale();
 
-        $categories = ShopCategory::whereHas('descriptions',function ($q) use ($lang){
-            $q->where('lang',$lang);
-        })->where([['top',1],['status',1]])->orderBy('sort','desc')->get();
-        return view($this->templatePath . '.screen.shop_home',compact('categories'),
+        $categories = ShopCategory::whereHas('descriptions', function ($q) use ($lang) {
+            $q->where('lang', $lang);
+        })->where([['top', 1], ['status', 1]])->orderBy('sort', 'desc')->get();
+        return view($this->templatePath . '.screen.shop_home', compact('categories'),
             array(
                 'title' => sc_store('title'),
                 'keyword' => sc_store('keyword'),
@@ -44,7 +45,7 @@ class ShopFront extends GeneralController
 
     /**
      * display list category root (parent = 0)
-     * @return [view]  
+     * @return [view]
      */
     public function allCategory()
     {
@@ -166,7 +167,7 @@ class ShopFront extends GeneralController
             ->setPaginate()
             ->setSort([$sortBy, $sortOrder])
             ->getData();
-        
+
         return view($this->templatePath . '.screen.shop_product_list',
             array(
                 'title' => trans('front.all_product'),
@@ -175,7 +176,7 @@ class ShopFront extends GeneralController
                 'products' => $products,
                 'layout_page' => 'product_list',
                 'filter_sort' => $filter_sort,
-        ));
+            ));
     }
 
     /**
@@ -185,7 +186,7 @@ class ShopFront extends GeneralController
      */
     public function productDetail($alias)
     {
-        $product = (new ShopProduct)->getDetail($alias, $type = 'alias' );
+        $product = (new ShopProduct)->getDetail($alias, $type = 'alias');
         if ($product && $product->status && (sc_config('product_display_out_of_stock') || $product->stock > 0)) {
             //Update last view
             $product->view += 1;
@@ -194,10 +195,10 @@ class ShopFront extends GeneralController
             //End last viewed
 
             //Product last view
-                $arrlastView = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
-                $arrlastView[$product->id] = date('Y-m-d H:i:s');
-                arsort($arrlastView);
-                \Cookie::queue('productsLastView', json_encode($arrlastView), (86400 * 30));
+            $arrlastView = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
+            $arrlastView[$product->id] = date('Y-m-d H:i:s');
+            arsort($arrlastView);
+            \Cookie::queue('productsLastView', json_encode($arrlastView), (86400 * 30));
             //End product last view
 
             $categories = $product->categories->keyBy('id')->toArray();
@@ -302,7 +303,7 @@ class ShopFront extends GeneralController
     /**
      * brand detail
      * @param  [string] $alias
-     * @return [view] 
+     * @return [view]
      */
     public function brandDetail($alias)
     {
@@ -323,13 +324,13 @@ class ShopFront extends GeneralController
         }
 
         $brand = (new ShopBrand)->getDetail($alias, $type = 'alias');
-        if($brand) {
+        if ($brand) {
             $products = (new ShopProduct)
-            ->getProductToBrand($brand->id)
-            ->setPaginate()
-            ->setLimit(sc_config('product_list'))
-            ->setSort([$sortBy, $sortOrder])
-            ->getData();
+                ->getProductToBrand($brand->id)
+                ->setPaginate()
+                ->setLimit(sc_config('product_list'))
+                ->setSort([$sortBy, $sortOrder])
+                ->getData();
 
             return view($this->templatePath . '.screen.shop_product_list',
                 array(
@@ -412,11 +413,11 @@ class ShopFront extends GeneralController
         $supplier = (new ShopSupplier)->getDetail($alias, $type = 'alias');
         if ($supplier) {
             $products = (new ShopProduct)
-            ->getProductToSupplier($supplier->id)
-            ->setPaginate()
-            ->setLimit(sc_config('product_list'))
-            ->setSort([$sortBy, $sortOrder])
-            ->getData();
+                ->getProductToSupplier($supplier->id)
+                ->setPaginate()
+                ->setLimit(sc_config('product_list'))
+                ->setSort([$sortBy, $sortOrder])
+                ->getData();
 
             return view($this->templatePath . '.screen.shop_product_list',
                 array(
@@ -427,7 +428,7 @@ class ShopFront extends GeneralController
                     'products' => $products,
                     'og_image' => asset($supplier->getImage()),
                     'filter_sort' => $filter_sort,
-                    )
+                )
             );
         } else {
             return $this->itemNotFound();
@@ -459,10 +460,10 @@ class ShopFront extends GeneralController
         }
         $keyword = request('keyword') ?? '';
         $products = (new ShopProduct)->setKeyword($keyword)
-                    ->setSort([$sortBy, $sortOrder])
-                    ->setPaginate()
-                    ->setLimit(sc_config('product_list'))
-                    ->getData();
+            ->setSort([$sortBy, $sortOrder])
+            ->setPaginate()
+            ->setLimit(sc_config('product_list'))
+            ->getData();
 
         return view($this->templatePath . '.screen.shop_product_list',
             array(
@@ -474,22 +475,71 @@ class ShopFront extends GeneralController
         );
     }
 
+    public function ajaxSearch(Request $request)
+    {
+        $keyword = $request->val;
+        $lang = app()->getLocale();
+
+        $products = ShopProduct::whereHas('descriptions', function ($q) use ($lang, $keyword) {
+            $q->where('lang', $lang)->Where('name', 'like', '%' . $keyword . '%');
+        })->where('status', 1)->orderBy('sort', 'desc')->limit(3)->get();
+
+        $child_cats = ShopCategory::whereHas('descriptions', function ($q) use ($lang, $keyword) {
+            $q->where('lang', $lang)->Where('title', 'like', '%' . $keyword . '%');
+        })->where('status', 1)->orderBy('sort', 'desc')->get();
+
+        $cat = ShopCategory::whereHas('descriptions', function ($q) use ($lang, $keyword) {
+            $q->where('lang', $lang)->Where('title', $keyword);
+        })->where('status', 1)->orderBy('sort', 'desc')->first();
+        $html = '';
+        $html .= '<div class="result-search-category"><ul>';
+
+        foreach ($products as $product) {
+            $html .= '  <li><a href="'.route('category.detail',$product->categories[0]->alias).'">' . $product->description[0]->name . ' در دسته <strong>' . $product->categories[0]->description[0]->title . '</strong></a></li>';
+        }
+
+        foreach ($child_cats as $child_cat) {
+            $html .= '  <li><a href="'.route('category.detail',$child_cat->alias).'">' . $keyword . ' در دسته <strong>' . $child_cat->description[0]->title . '</strong></a></li>';
+        }
+        if ($cat !== null) {
+            $html .= '<li><a href="'.route('category.detail',$cat->alias).'">همه کالاها دسته‌بندی <strong>' . $cat->description[0]->title . '</strong></a></li>';
+        }
+        $html .= '  </ul> </div><div class="result-search-item"><ul>';
+
+        if ($cat != null) {
+             $product_suggestions = $cat->products()->limit(5)->get();
+            foreach ($product_suggestions as $product_suggestion) {
+
+                $html .= '    <li><a href="'.route('category.detail',$product_suggestion->categories[0]->alias).'">' . $product_suggestion->description[0]->name . '</a></li>';
+
+            }
+        }
+
+        $html .= '</ul> </div>';
+
+        if ($products == null && $child_cats == null && $product_suggestions == null) {
+            $html = '<p>نتیجه ای یافت نشد.</p>';
+        }
+        return json_encode($html);
+
+    }
+
     /**
      * Process click banner
      *
-     * @param   [int]  $id  
+     * @param   [int]  $id
      *
      */
-    public function clickBanner($id){
+    public function clickBanner($id)
+    {
         $banner = ShopBanner::find($id);
-        if($banner) {
-            $banner->click +=1;
+        if ($banner) {
+            $banner->click += 1;
             $banner->save();
-            return redirect(url($banner->url??'/'));
+            return redirect(url($banner->url ?? '/'));
         }
         return redirect(url('/'));
     }
-
 
 
     /**
@@ -627,13 +677,13 @@ class ShopFront extends GeneralController
     /**
      * News detail
      *
-     * @param   [string]  $alias 
+     * @param   [string]  $alias
      *
      * @return  view
      */
     public function newsDetail($alias)
     {
-        $news = (new ShopNews)->getDetail($alias, $type ='alias');
+        $news = (new ShopNews)->getDetail($alias, $type = 'alias');
         if ($news) {
             return view(
                 $this->templatePath . '.screen.shop_news_detail',
@@ -660,11 +710,11 @@ class ShopFront extends GeneralController
     {
         $validator = $request->validate([
             'subscribe_email' => 'required|email',
-            ], [
+        ], [
             'email.required' => trans('validation.required'),
-            'email.email'    => trans('validation.email'),
+            'email.email' => trans('validation.email'),
         ]);
-        $data       = $request->all();
+        $data = $request->all();
         $checkEmail = ShopSubscribe::where('email', $data['subscribe_email'])
             ->first();
         if (!$checkEmail) {

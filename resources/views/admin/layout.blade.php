@@ -25,6 +25,8 @@
         <!-- Daterange picker -->
         <link rel="stylesheet"
               href="{{ asset('admin/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+        <link rel="stylesheet" href="{{ asset('admin/plugin/clockpicker/bootstrap-clockpicker.min.css')}}">
+
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet"
               href="{{ asset('admin/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
@@ -127,6 +129,9 @@
     <script src="{{ asset('admin/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <!-- datepicker -->
     <script src="{{ asset('admin/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+    {{--timepicker--}}
+    <script src="{{ asset('admin/plugin/clockpicker/bootstrap-clockpicker.min.js')}}"></script>
+
     <!-- Bootstrap WYSIHTML5 -->
     <script src="{{ asset('admin/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
     <!-- Slimscroll -->
@@ -143,6 +148,20 @@
     <script src="{{ asset('admin/AdminLTE/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
     {{-- switch --}}
     <script src="{{ asset('admin/plugin/bootstrap-switch.min.js')}}"></script>
+    <script src="{{ asset('admin/plugin/clockpicker/bootstrap-clockpicker.min.js')}}"></script>
+    <script>
+        $('.timepickeralt').clockpicker({
+            placement: 'top',
+            donetext: 'انتخاب',
+            autoclose: true,
+            afterDone: function () {
+                var val = $('.timepickeralt:focus').val();
+                var converted = toPersianNum(val);
+                $('.timepickeralt:focus').val(converted);
+            }
+        });
+    </script>
+
 @endif
 
 @stack('scripts')
