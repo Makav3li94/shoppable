@@ -25,6 +25,7 @@ return [
 	'reset_password'     => 'تنظیم مجدد رمز عبور',
 	'login'              => 'ورود',
 	'sign_up'            => 'ثبت نام',
+	'register'            => 'ثبت نام',
 	'new_user'           => 'کاربر جدید هستید ؟',
 	'search'             => 'جست و جو',
 	'account'            => 'اکانت',

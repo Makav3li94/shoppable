@@ -71,6 +71,19 @@ class LoginController extends GeneralController
         );
     }
 
+    public function showRegisterForm(){
+	    if (Auth::user()) {
+		    return redirect()->route('home');
+	    }
+	    return view($this->templatePath . '.screen.shop_register',
+		    array(
+			    'title' => trans('front.register'),
+			    'countries' => ShopCountry::getArray(),
+			    'layout_page' => 'shop_auth',
+		    )
+	    );
+    }
+
     public function logout(Request $request)
     {
         $this->guard()->logout();

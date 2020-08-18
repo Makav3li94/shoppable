@@ -186,10 +186,10 @@
                             <div class="panel">
                                 @guest
                                     <div class="header">
-                                        <a href="signin.html"
+                                        <a href="{{route('login')}}"
                                            class="btn btn-info btn-lg btn-block">{{trans('front.login')}}</a>
                                         <p>{{trans('front.new_user')}}<a
-                                                    href="signup.html">{{trans('front.sigh_up')}}</a></p>
+                                                    href="{{route('register')}}">{{trans('front.register')}}</a></p>
                                     </div>
                                 @else
                                     <div class="body">

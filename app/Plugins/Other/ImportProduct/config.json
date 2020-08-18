@@ -1,0 +1,11 @@
+{
+    "name": "ImportProduct module",
+    "image": "images/logo.jpg",
+    "auth": "Naruto",
+    "email": "lanhktc@gmail.com",
+    "link": "http://S-Cart.org",
+    "configGroup": "Plugins",
+    "configCode": "Other",
+    "configKey": "ImportProduct",
+    "version": "1.0"
+}

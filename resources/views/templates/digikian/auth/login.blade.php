@@ -12,7 +12,7 @@ $layout_page = shop_auth
         <input class="is_required validate account_input form-control {{ ($errors->has('email'))?"input-error":"" }}"
             type="text" name="email" value="{{ old('email') }}">
         @if ($errors->has('email'))
-        <span class="help-block">
+            <span class="help-block">
             {{ $errors->first('email') }}
         </span>
         @endif

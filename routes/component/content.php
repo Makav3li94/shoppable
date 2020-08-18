@@ -6,7 +6,7 @@ $prefixNews = sc_config('PREFIX_NEWS')??'news';
 Route::get('/'.$prefixSearch.$suffix, 'ShopFront@search')
 ->name('search');
 
-Route::get('/'.$prefixSearch.$suffix, 'ShopFront@ajaxSearch')
+Route::get('/live_search/'.$prefixSearch.$suffix, 'ShopFront@ajaxSearch')
     ->name('ajax_search');
 
 Route::post('/subscribe', 'ShopFront@emailSubscribe')
