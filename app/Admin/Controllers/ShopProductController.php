@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
+use App\Models\ShopGuarantee;
 use App\Models\ShopTax;
 use App\Models\ShopCategory;
 use App\Models\ShopLanguage;
@@ -259,6 +260,7 @@ class ShopProductController extends Controller
             'categoriesCheck' => (new ShopCategory)->getTreeCategoriesChildParent(),
             'brands' => (new ShopBrand)->getList(),
             'suppliers' => (new ShopSupplier)->getList(),
+            'guarantees' => (new ShopGuarantee())->getList(),
             'taxs' => (new ShopTax)->getList(),
             'virtuals' => $this->virtuals,
             'kinds' => $this->kinds,
@@ -390,8 +392,10 @@ class ShopProductController extends Controller
         $productBuildQty = $data['productBuildQty'] ?? [];
         $subImages = $data['sub_image'] ?? [];
         $supplier_id = $data['supplier_id']?? [];
+        $guarantee_id = $data['guarantee_id']?? [];
         $dataInsert = [
             'brand_id' => $data['brand_id']??0,
+            'guarantee_id' => $guarantee_id,
             'supplier_id' => implode(',', $supplier_id ),
             'price' => $data['price']??0,
             'sku' => $data['sku'],
@@ -549,6 +553,7 @@ class ShopProductController extends Controller
             'product' => $product,
             'categories' => (new ShopCategory)->getTreeCategories(),
             'brands' => (new ShopBrand)->getList(),
+            'guarantees' => (new ShopGuarantee)->getList(),
             'suppliers' => (new ShopSupplier)->getList(),
             'taxs' => (new ShopTax)->getList(),
             'virtuals' => $this->virtuals,
@@ -670,10 +675,12 @@ class ShopProductController extends Controller
         $productBuildQty = $data['productBuildQty'] ?? [];
         $subImages = $data['sub_image'] ?? [];
         $supplier_id = $data['supplier_id']?? [];
+        $guarantee_id = $data['guarantee_id']?? [];
         $dataUpdate = [
             'image' => $data['image'] ?? '',
             'tax_id' => $data['tax_id'] ?? 0,
             'brand_id' => $data['brand_id'] ?? 0,
+            'guarantee_id' => $data['guarantee_id'] ?? 0,
             'supplier_id' => implode(',', $supplier_id ),
             'price' => $data['price'] ?? 0,
             'cost' => $data['cost'] ?? 0,

@@ -342,7 +342,32 @@
                         </div>
                         {{-- //Supplier --}}
 @endif
+                        {{-- select guarantees --}}
+                        <div class="form-group  kind kind0 kind1  {{ $errors->has('guarantee_id') ? ' has-error' : '' }}">
 
+                            <label for="guarantee_id"
+                                   class="col-sm-2 col-form-label">{{ trans('product.guarantee') }}</label>
+                            <div class="col-sm-8">
+                                <select class="form-control input-sm guarantee_id select2"
+                                        data-placeholder="{{ trans('product.admin.select_guarantee') }}"
+                                        style="width: 100%;"
+                                        name="guarantee_id">
+                                    <option value=""></option>
+                                    @foreach ($guarantees as $k => $v)
+                                        <option value="{{ $k }}"
+                                                {{ (old('guarantee_id') == $k || (!old() && $product->guarantee_id == $k) ) ? 'selected':'' }}>
+                                            {{ $v->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('guarantee_id'))
+                                    <span class="help-block">
+                                    <i class="fa fa-info-circle"></i> {{ $errors->first('guarantee_id') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        {{--// select guarantees --}}
 @if (sc_config('product_cost'))
                         {{-- Cost --}}
                         @if ($product->kind == SC_PRODUCT_SINGLE)

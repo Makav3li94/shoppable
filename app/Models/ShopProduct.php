@@ -41,6 +41,11 @@ class ShopProduct extends Model
         return $this->belongsToMany(ShopCategory::class, ShopProductCategory::class, 'product_id', 'category_id');
     }
 
+    public function guarantee()
+    {
+        return $this->belongsTo(ShopGuarantee::class, 'guarantee_id', 'id');
+    }
+
     public function groups()
     {
         return $this->hasMany(ShopProductGroup::class, 'group_id', 'id');

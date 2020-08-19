@@ -18,6 +18,7 @@ return [
     'edit_product'          => 'ویرایش محصول',
     'category'              => 'دسته',
     'cost'                  => 'هزینه',
+    'guarantee'             => 'گارانتی',
     'stock'                 => 'انبار',
     'name'                  => 'نام',
     'keyword'               => 'کلمه کلیدی',

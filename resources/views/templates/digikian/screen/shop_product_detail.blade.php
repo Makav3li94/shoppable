@@ -63,7 +63,7 @@
                         </div>
                         <div class="left">
                             <img id="ZoomProduct" src="{{ asset($product->getImage()) }}"
-                                 data-zoom-image="asset/files/gallery/800-800.jpg" class="img-fluid" alt="">
+                                 data-zoom-image="{{ asset($product->getImage()) }}" class="img-fluid" alt="">
                         </div>
                     </div>
                     <div class="footer">
@@ -192,10 +192,14 @@
                                                                             </div>
                                                                         </div>
                                 -->
-                                <div class="warranty py-2">
-                                    <p><i class="d-inline-flex align-middle ml-1 mdi mdi-verified mdi-24px"></i>گارانتی
-                                        ۳۶ ماهه داده پرداز رایانه متین</p>
-                                </div>
+                                @if($product->guarantee_id != 0)
+                                    <div class="warranty py-2">
+                                        <p>
+                                            <i class="d-inline-flex align-middle ml-1 mdi mdi-verified mdi-24px"></i>
+                                            {{$product->guarantee->title}}
+                                        </p>
+                                    </div>
+                                @endif
                             </div>
                             <div class="section-body py-2">
                                 <div class="seller py-2">

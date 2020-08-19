@@ -385,6 +385,39 @@
                                 </div>
                                 {{--// select supplier --}}
                             @endif
+                            {{-- select guarantees --}}
+                            <div class="form-group  kind kind0 kind1  {{ $errors->has('supplier_id') ? ' has-error' : '' }}">
+                                @php
+                                    $listGuarantee = [];
+                                    if(is_array(old('guarantee_id'))){
+                                    foreach(old('guarantee_id') as $value){
+                                    $listGuarantee[] = (int)$value;
+                                    }
+                                    }
+                                @endphp
+                                <label for="guarantee_id"
+                                       class="col-sm-2 col-form-label">{{ trans('product.guarantee') }}</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-sm guarantee_id select2" multiple="multiple"
+                                            data-placeholder="{{ trans('product.admin.select_guarantee') }}"
+                                            style="width: 100%;"
+                                            name="guarantee_id">
+                                        <option value=""></option>
+                                        @foreach ($guarantees as $k => $v)
+                                            <option value="{{ $k }}"
+                                                    {{ (count($listGuarantee) && in_array($v->id, $listGuarantee))?'selected':'' }}>{{ $v->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('guarantee_id'))
+                                        <span class="help-block">
+                                    <i class="fa fa-info-circle"></i> {{ $errors->first('guarantee_id') }}
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+                            {{--// select guarantees --}}
+                            guarantees
 
                             @if (sc_config('product_cost'))
                                 {{-- cost --}}
