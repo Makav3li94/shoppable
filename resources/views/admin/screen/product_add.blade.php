@@ -851,6 +851,32 @@
                             </div>
                             {{-- //status --}}
 
+                            <div class="form-group {{ $errors->has('product_type') ? ' has-error' : '' }}">
+
+                                <label for="status" class="col-sm-2  control-label">تایپ محصول</label>
+                                <div class="col-sm-8">
+
+
+                                    <select class="form-control " id="product_type" style="width: 100%;"
+                                            name="product_type">
+                                        <option value="">{{ trans('product.admin.select_kind') }}</option>
+                                        @foreach ($product_types as $key => $product_type)
+                                            {{--                                            <option value="{{ $key }}" {{ (old('product_type') ==$key) ? 'selected':'' }}>{{ $product_type }}</option>--}}
+                                            <option value="{{ $key }}">{{ $product_type }}</option>
+                                        @endforeach
+                                    </select>
+
+
+                                    @if ($errors->has('product_type'))
+                                        <span class="help-block">
+                                    <i class="fa fa-info-circle"></i> {{ $errors->first('product_type') }}
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="attrs"></div>
+
                             @if (sc_config('product_kind'))
                                 <hr class="kind kind2">
                                 {{-- List product in groups --}}
@@ -986,6 +1012,8 @@
                                 @endif
                                 {{-- //end List product attributes --}}
                             @endif
+
+
 
                         </div>
                     </div>
@@ -1733,6 +1761,239 @@
             } catch (exeption) {
             }
         });
+
+        var attr_type_related = $('input[name ="attr_type_related"]').val();
+
+        $('[name="product_type"]').change(function (event) {
+            var product_type = $('[name="product_type"] option:selected').val();
+            $('#attr_related').html('');
+
+            var attr_type_related = $('input[name ="attr_type_related"]').val();
+
+            if (attr_type_related == 'all') {
+                $.ajax({
+                    url: "{{route('admin_product.getProductRealte')}}",
+                    type: "POST",
+                    data: {"product_type": product_type, "_token": "{{csrf_token()}}"},
+                    async: false,
+                    success: function (data) {
+                        // $('.attr_related').show();
+                        for (var w in data) {
+                            if (data[w] != null
+                            ) {
+                                $('#attr_related').append('<option value="' + w + '">' + data[w] + '</option>');
+                            }
+                        }
+                    }
+                });
+            }
+
+            // FiLL Related Products On Page Load
+
+            //End FiLL Related Products On Page Load
+
+            function initControlRelation() {
+
+                $('.relatioan_control').each(function (index) {
+
+                    $(this).find('.select2').select2();
+                    $(this).find('.container_relation').append($($('.relation_master_radio').clone().html()));
+                    var index_item = index;
+                    var select_item = $(this).find('select');
+                    $(this).find('.container_relation').find('*[type="radio"]').each(function () {
+                        $(this).prop('name', $(this).prop('name') + '_' + index_item);
+                        if ($(this).val() == 'all') {
+                            var attr_type_related = $('input[name ="attr_type_related_' + index_item + '"]:checked').val();
+
+                            $(select_item).html('');
+                            $.ajax({
+                                url: "{{route('admin_product.getProductRealte')}}",
+                                type: "POST",
+                                data: {
+                                    "product_type": product_type,
+                                    "attr_type_related": attr_type_related,
+                                    "_token": "{{csrf_token()}}"
+                                },
+                                async: false,
+                                success: function (data) {
+                                    // $('.attr_related').show();
+                                    for (var w in data) {
+                                        if (data[w] != null
+                                        ) {
+                                            $(select_item).append('<option value="' + w + '">' + data[w] + '</option>');
+                                        }
+                                    }
+
+                                }
+                            });
+                        }
+                        $(this).change(function (event) {
+                            var attr_type_related = $('input[name ="attr_type_related_' + index_item + '"]:checked').val();
+
+                            $(select_item).html('');
+                            $.ajax({
+                                url: "{{route('admin_product.getProductRealte')}}",
+                                type: "POST",
+                                data: {
+                                    "product_type": product_type,
+                                    "attr_type_related": attr_type_related,
+                                    "_token": "{{csrf_token()}}"
+                                },
+                                async: false,
+                                success: function (data) {
+                                    // $('.attr_related').show();
+                                    for (var w in data) {
+                                        if (data[w] != null
+                                        ) {
+                                            $(select_item).append('<option value="' + w + '">' + data[w] + '</option>');
+                                        }
+                                    }
+
+                                }
+                            });
+                        });
+                    });
+                    var select_item = $(this).find('select');
+
+
+                })
+            }
+
+
+            $('input[name ="attr_type_related"]').change(function (event) {
+                var attr_type_related = $('input[name ="attr_type_related"]:checked').val();
+
+                $('#attr_related').html('');
+                $.ajax({
+                    url: "{{route('admin_product.getProductRealte')}}",
+                    type: "POST",
+                    data: {
+                        "product_type": product_type,
+                        "attr_type_related": attr_type_related,
+                        "_token": "{{csrf_token()}}"
+                    },
+
+                    async: false,
+                    success: function (data) {
+                        $('.attr_related').show();
+                        for (var w in data) {
+                            if (data[w] != null
+                            ) {
+                                $('#attr_related').append('<option value="' + w + '">' + data[w] + '</option>');
+                            }
+                        }
+
+                    }
+                });
+            });
+
+
+            process_product_type_form();
+            initControlRelation();
+        });
+
+
+        function process_product_type_form() {
+            var product_type = $('[name="product_type"] option:selected').val();
+            $('.attrs').html("");
+            $.ajax({
+                url: "{{route('admin_product.getProductTypes')}}",
+                type: "POST",
+                data: {"product_type": product_type, "_token": "{{csrf_token()}}"},
+                async: false,
+                success: function (data) {
+                    for (var i = 0; i < data.length; ++i) {
+
+                        $('.attrs').append("<h3>" + data[i]['name'] + "<h3><br>");
+
+                        for (var j = 0; j < data[i]['attrs'].length; ++j) {
+
+                            if (data[i]['attrs'][j]['required'] == 1) {
+                                // alert(data[i]['attrs'][j]['required']);
+                                var requiredVal = 'required ';
+                                var req = 'asterisk ';
+                            } else {
+                                var requiredVal = ''
+                                var req = '';
+                            }
+                            if (data[i]['attrs'][j]['input_type'] == 'select') {
+
+                                $.ajax({
+                                    url: "{{route('admin_product.getAttrInput')}}",
+                                    type: "POST",
+                                    data: {"attr_id": data[i]['attrs'][j]['attr_id'], "_token": "{{csrf_token()}}"},
+                                    async: false,
+                                    success: function (attrInput) {
+                                        var temp = "";
+
+                                        for (var w in attrInput) {
+                                            temp = temp + '<option value="' + attrInput[w]['input'] + '" >' + attrInput[w]['input'] + '</option>';
+                                        }
+                                        $('.attrs').append("<div class='form-group'>" +
+                                            "<label for='attr_text_" + j + "' class='col-sm-2  control-label " + req + "'>" + data[i]['attrs'][j]['name'] + "</label>"
+                                            + "<div class=\"col-sm-8\">"
+                                            + "<select name='attr_text_[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "]' id='attr_text_" + j + "' class=\"form-control\" " + requiredVal + " >"
+                                            + temp
+                                            + "</select>"
+                                            + "</div></div>"
+                                        );
+                                    }
+                                });
+                            } else if (data[i]['attrs'][j]['input_type'] == 'relational') {
+                                $('.attrs').append("<div class='form-group relatioan_control' data-name ='" + data[i]['attrs'][j] + "'>" +
+                                    "<label for='attr_text_" + j + "' class='col-sm-2  control-label " + req + " '+>" + data[i]['attrs'][j]['name'] + "</label>"
+                                    + "<div class=\"col-sm-8 container_relation \" >"
+                                    + "<div class=\"input-group\">"
+                                    + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
+                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2  input-sm'   multiple='multiple'  name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "][]' " + requiredVal + " >"
+                                    + "</select></div></div></div>"
+                                );
+                            } else if (data[i]['attrs'][j]['input_type'] == 'enumeration') {
+
+                                $('.attrs').append("<div class='form-group ' data-name ='" + data[i]['attrs'][j] + "'>" +
+                                    "<label for='attr_text_" + j + "' class='col-sm-2  control-label " + req + " '+>" + data[i]['attrs'][j]['name'] + "</label>"
+                                    + "<div class=\"col-sm-8\" >"
+                                    + "<div class=\"input-group\">"
+                                    + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
+                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2 input-sm enumeration_options'   multiple='multiple'  name='attr_text_enumeration[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "][]' " + requiredVal + " >"
+                                    + "</select></div></div></div>"
+                                );
+                                $('.select2').select2();
+                                $.ajax({
+                                    url: "{{route('admin_enumeration_type.getProductEnumeration')}}",
+                                    type: "POST",
+                                    data: {
+                                        "_token": "{{csrf_token()}}"
+                                    },
+
+                                    async: false,
+                                    success: function (enumeration) {
+
+                                        for (var p in enumeration) {
+                                            if (enumeration[p] != null
+                                            ) {
+                                                $('.enumeration_options').append('<option value="' + p + '">' + enumeration[p] + '</option>');
+                                            }
+                                        }
+
+                                    }
+                                });
+                            } else {
+                                $('.attrs').append("<div class='form-group'>" +
+                                    "<label for='attr_text_" + j + "' class='col-sm-2  control-label'+>" + data[i]['attrs'][j]['name'] + "</label>"
+                                    + "<div class=\"col-sm-8\">"
+                                    + "<div class=\"input-group\">"
+                                    + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
+                                    + "<input type='text' value='' id='attr_text_" + j + "' class='form-control input-sm' name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "]' " + requiredVal + " >"
+                                    + "</div></div></div>"
+                                );
+                            }
+                        }
+                        $('.attrs').append("<hr>");
+                    }
+                }
+            });
+        }
     </script>
 
 @endpush

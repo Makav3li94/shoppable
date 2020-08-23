@@ -8,4 +8,8 @@ $router->group(['prefix' => 'product'], function ($router) {
     $router->post('/delete', 'ShopProductController@deleteList')->name('admin_product.delete');
     $router->get('/import', 'ShopProductController@import')->name('admin_product.import');
     $router->post('/import', 'ShopProductController@postImport')->name('admin_product.import');
+    $router->post('/getProductTypes', 'ShopProductController@getProductTypes')->name('admin_product.getProductTypes');
+    $router->post('/getAttrInput', 'ShopProductController@getAttrInput')->name('admin_product.getAttrInput');
+    $router->post('/getProductRealte', 'ShopProductController@getProductRealte')->name('admin_product.getProductRealte');
+    $router->post('/getRelatedProducts', 'ShopProductController@getRelatedProducts')->name('admin_product.getRelatedProducts');
 });

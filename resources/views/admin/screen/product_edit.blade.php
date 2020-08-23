@@ -797,7 +797,28 @@
                             </div>
                         </div>
                         {{-- //Status --}}
+                        <div class="form-group {{ $errors->has('product_type') ? ' has-error' : '' }}">
 
+                            <label for="status" class="col-sm-2  control-label">تایپ محصول</label>
+                            <div class="col-sm-8">
+
+
+                                <select class="form-control " id="product_type" style="width: 100%;"
+                                        name="product_type">
+                                    <option value="">{{ trans('product.admin.select_kind') }}</option>
+                                    @foreach ($product_types as $key => $product_type)
+                                        <option value="{{ $key }}" {{ $product->type_id  === $key?'selected':'' }}>{{ $product_type }}</option>
+                                    @endforeach
+                                </select>
+
+
+                                @if ($errors->has('product_type'))
+                                    <span class="help-block">
+                                    <i class="fa fa-info-circle"></i> {{ $errors->first('product_type') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
 @if (sc_config('product_kind'))
                         @if ($product->kind == SC_PRODUCT_GROUP)
                         {{-- List product in groups --}}

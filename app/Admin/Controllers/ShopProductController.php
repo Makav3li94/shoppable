@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopGuarantee;
+use App\Models\ShopProductAttributeValue;
+use App\Models\ShopProductGroupTypeAttr;
+use App\Models\ShopProductType;
+use App\Models\ShopProductTypeAttr;
 use App\Models\ShopTax;
 use App\Models\ShopCategory;
 use App\Models\ShopLanguage;
@@ -18,6 +22,7 @@ use App\Models\ShopProductDescription;
 use App\Models\ShopProductGroup;
 use App\Models\ShopProductImage;
 use App\Models\ShopSupplier;
+use Illuminate\Support\Facades\Request;
 use Validator;
 
 class ShopProductController extends Controller
@@ -264,6 +269,7 @@ class ShopProductController extends Controller
             'taxs' => (new ShopTax)->getList(),
             'virtuals' => $this->virtuals,
             'kinds' => $this->kinds,
+            'product_types' => ShopProductType::getList(),
             'attributeGroup' => $this->attributeGroup,
             'htmlSelectGroup' => $htmlSelectGroup,
             'htmlSelectBuild' => $htmlSelectBuild,
@@ -558,6 +564,7 @@ class ShopProductController extends Controller
             'taxs' => (new ShopTax)->getList(),
             'virtuals' => $this->virtuals,
             'kinds' => $this->kinds,
+            'product_types' => ShopProductType::getList(),
             'attributeGroup' => $this->attributeGroup,
             'htmlSelectGroup' => $htmlSelectGroup,
             'categoriesCheck' => (new ShopCategory)->getTreeCategoriesChildParent(),
@@ -829,5 +836,103 @@ Need mothod destroy to boot deleting in model
 
         }
     }
+
+
+
+
+    public function getProductTypes()
+    {
+        $product_type = request()->product_type;
+        if (request()->has('product_id')) {
+            $product_id = request()->product_id;
+        }
+        $data = [];
+
+        $type_groups = ShopProductGroupTypeAttr::select('id', 'type_id', 'name')->Where('type_id', $product_type)->get();
+
+        foreach ($type_groups as $key => $type_group) {
+            $type_groups[$key]->attrs = ShopProductTypeAttr::select('id', 'type_id', 'input_type', 'searchable', 'required', 'group_id', 'name')
+                ->Where('group_id', $type_group->id)
+                ->get();
+
+            $clause = [];
+
+            foreach ($type_groups[$key]->attrs as $k => $type_groups_attr) {
+                $clause = [];
+                $clause[] = ['attr_id', $type_groups_attr->attr_id];
+
+                if (empty($product_id) == false) {
+                    $clause[] = ['product_id', $product_id];
+                }
+//        DB::enableQueryLog();
+                $value = ShopProductAttributeValue::where($clause)->pluck('content_value');
+//                        dd(DB::getQueryLog());
+                if (empty($product_id) == false) {
+                    $type_groups[$key]->attrs[$k]->value = $value;
+                }
+
+            }
+        }
+
+        return $type_groups;
+    }
+
+    function getAttrInput()
+    {
+        return ShopProductAttrInput::where('attr_id', request()->attr_id)->get();
+    }
+
+    function getProductRealte()
+    {
+        if (isset(request()->attr_type_related) && request()->attr_type_related != 'all') {
+
+            return DB::table('shop_product')
+                ->leftJoin('shop_product_description', 'shop_product.id', '=', 'shop_product_description.product_id')
+                ->where('shop_product.type_id', '=', request()->attr_type_related)
+                ->pluck('name', 'id');
+        } else {
+
+            return DB::table('shop_product')
+                ->leftJoin('shop_product_description', 'shop_product.id', '=', 'shop_product_description.product_id')
+                ->pluck('name', 'id');
+
+        }
+    }
+
+    function getRelatedProducts()
+    {
+//        DB::enableQueryLog();
+        $result = DB::table('shop_product_attr_relate')
+            ->leftJoin('shop_product', 'shop_product_attr_relate.product_id', '=', 'shop_product.id')
+            ->leftJoin('shop_product_description', 'shop_product_attr_relate.related_product_id', '=', 'shop_product_description.product_id')
+            ->where([
+                ['shop_product_attr_relate.product_id', '=', request()->product_id],
+                ['shop_product_attr_relate.attr_id', '=', request()->attr_id]
+            ])
+            ->pluck('name', 'related_product_id');
+//            ->pluck('name', 'related_product_id');
+//        dd(DB::getQueryLog());
+        return $result;
+    }
+
+
+    public function getFirstChildCat()
+    {
+        return DB::table('shop_category')
+            ->leftJoin('shop_category_description', 'shop_category.id', '=', 'shop_category_description.category_id')
+            ->where('parent', \request()->cat_id)
+            ->pluck('name', 'id');
+    }
+
+    public function getProductTypeAttr()
+    {
+        return DB::select(
+            "select *, GROUP_CONCAT(DISTINCT  pa_shop_product_attr_input_value .content_value ) AS contents from `pa_shop_product_attr_input_value` 
+            left join `shop_type_attr`  on `pa_shop_type_attr`.`attr_id` = `pa_shop_product_attr_input_value`.`attr_id` 
+            where  `pa_shop_product_attr_input_value`.`type_id` = " . request()->type_id . " AND pa_shop_type_attr.searchable = 1 GROUP BY shop_type_attr.name"
+        );
+
+    }
+
 
 }
