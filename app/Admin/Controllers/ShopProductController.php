@@ -7,6 +7,7 @@ use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopGuarantee;
 use App\Models\ShopProductAttributeValue;
+use App\Models\ShopProductAttrRelate;
 use App\Models\ShopProductGroupTypeAttr;
 use App\Models\ShopProductType;
 use App\Models\ShopProductTypeAttr;
@@ -398,7 +399,7 @@ class ShopProductController extends Controller
         $productBuildQty = $data['productBuildQty'] ?? [];
         $subImages = $data['sub_image'] ?? [];
         $supplier_id = $data['supplier_id']?? [];
-        $guarantee_id = $data['guarantee_id']?? [];
+        $guarantee_id = $data['guarantee_id']?? 0;
         $dataInsert = [
             'brand_id' => $data['brand_id']??0,
             'guarantee_id' => $guarantee_id,
@@ -414,6 +415,7 @@ class ShopProductController extends Controller
             'length' => $data['length'] ?? 0,
             'width' => $data['width'] ?? 0,
             'kind' => $data['kind']??SC_PRODUCT_SINGLE,
+            'type_id' => $data['product_type']??0,
             'alias' => $data['alias'],
             'virtual' => $data['virtual'] ?? SC_VIRTUAL_PHYSICAL,
             'date_available' => !empty($data['date_available']) ? $data['date_available'] : null,
@@ -425,6 +427,52 @@ class ShopProductController extends Controller
         ];
         //insert product
         $product = ShopProduct::create($dataInsert);
+
+
+        if (isset(request()->attr_text)) {
+            foreach (request()->attr_text as $group_id => $attr_group) {
+                foreach ($attr_group as $attr_id => $attr_attr) {
+                    if (is_array($attr_attr)) {
+
+                        foreach ($attr_attr as $keey => $related_prodcut)
+                            ShopProductAttrRelate::create([
+                                'type_id' => request()->product_type,
+                                'product_id' => $product->id,
+                                'attr_id' => $attr_id,
+                                'related_product_id' => $related_prodcut,
+                            ]);
+
+                    } else {
+                        ShopProductAttributeValue::create([
+                            'type_id' => request()->product_type,
+                            'group_id' => $group_id,
+                            'attr_id' => $attr_id,
+                            'product_id' => $product->id,
+                            'content_value' => $attr_attr,
+                            'status' => 1,
+                        ]);
+                    }
+                }
+            }
+        }
+
+
+        if (isset(request()->attr_text_enumeration)) {
+            foreach (request()->attr_text_enumeration as $group_id => $attr_group) {
+                foreach ($attr_group as $attr_id => $attr_attr) {
+                    foreach ($attr_attr as $attr_att) {
+                        ShopProductAttributeValue::create([
+                            'type_id' => request()->product_type,
+                            'group_id' => $group_id,
+                            'attr_id' => $attr_id,
+                            'product_id' => $id,
+                            'content_value' => $attr_att,
+                            'status' => 1,
+                        ]);
+                    }
+                }
+            }
+        }
 
         //Promoton price
         if (isset($data['price_promotion']) && in_array($data['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
@@ -682,7 +730,6 @@ class ShopProductController extends Controller
         $productBuildQty = $data['productBuildQty'] ?? [];
         $subImages = $data['sub_image'] ?? [];
         $supplier_id = $data['supplier_id']?? [];
-        $guarantee_id = $data['guarantee_id']?? [];
         $dataUpdate = [
             'image' => $data['image'] ?? '',
             'tax_id' => $data['tax_id'] ?? 0,
@@ -697,6 +744,7 @@ class ShopProductController extends Controller
             'weight' => $data['weight'] ?? 0,
             'height' => $data['height'] ?? 0,
             'length' => $data['length'] ?? 0,
+            'type_id' => $data['product_type']??0,
             'width' => $data['width'] ?? 0,
             'virtual' => $data['virtual'] ?? SC_VIRTUAL_PHYSICAL,
             'date_available' => !empty($data['date_available']) ? $data['date_available'] : null,
@@ -709,6 +757,65 @@ class ShopProductController extends Controller
 
         $product->update($dataUpdate);
 
+        //Atrr ssss
+
+        if (isset(request()->attr_text)) {
+            if (count(request()->attr_text) > 0) {
+                ShopProductAttrRelate::where('product_id', $id)->delete();
+                foreach (request()->attr_text as $group_id => $attr_group) {
+
+
+                    foreach ($attr_group as $attr_id => $attr_attr) {
+                        if (is_array($attr_attr)) {
+
+
+                            foreach ($attr_attr as $keey => $related_prodcut) {
+                                ShopProductAttrRelate::create([
+                                    'type_id' => request()->product_type,
+                                    'product_id' => $id,
+                                    'attr_id' => $attr_id,
+                                    'related_product_id' => $related_prodcut,
+                                ]);
+
+                            }
+                        } else {
+                            ShopProductAttributeValue::where('attr_id', $attr_id)->delete();
+                            ShopProductAttributeValue::create([
+                                'type_id' => request()->product_type,
+                                'group_id' => $group_id,
+                                'attr_id' => $attr_id,
+                                'product_id' => $id,
+                                'content_value' => $attr_attr,
+                                'status' => 1,
+                            ]);
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if (isset(request()->attr_text_enumeration)) {
+            foreach (request()->attr_text_enumeration as $group_id => $attr_group) {
+                foreach ($attr_group as $attr_id => $attr_attr) {
+                    if (count($attr_attr) > 0) {
+//                        DB::enableQueryLog();
+                        ShopProductAttributeValue::where([['product_id', $id], ['attr_id', $attr_id]])->delete();
+//                        dd(DB::getQueryLog());
+                        foreach ($attr_attr as $attr_att) {
+                            ShopProductAttributeValue::create([
+                                'type_id' => request()->product_type,
+                                'group_id' => $group_id,
+                                'attr_id' => $attr_id,
+                                'product_id' => $id,
+                                'content_value' => $attr_att,
+                                'status' => 1,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
         //Promoton price
         $product->promotionPrice()->delete();
         if (isset($data['price_promotion']) && in_array($product['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
@@ -859,7 +966,7 @@ Need mothod destroy to boot deleting in model
 
             foreach ($type_groups[$key]->attrs as $k => $type_groups_attr) {
                 $clause = [];
-                $clause[] = ['attr_id', $type_groups_attr->attr_id];
+                $clause[] = ['attr_id', $type_groups_attr->id];
 
                 if (empty($product_id) == false) {
                     $clause[] = ['product_id', $product_id];

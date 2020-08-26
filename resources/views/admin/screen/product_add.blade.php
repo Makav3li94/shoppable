@@ -853,7 +853,7 @@
 
                             <div class="form-group {{ $errors->has('product_type') ? ' has-error' : '' }}">
 
-                                <label for="status" class="col-sm-2  control-label">تایپ محصول</label>
+                                <label for="product_type" class="col-sm-2  control-label">تایپ محصول</label>
                                 <div class="col-sm-8">
 
 
@@ -1945,7 +1945,7 @@
                                     + "<div class=\"col-sm-8 container_relation \" >"
                                     + "<div class=\"input-group\">"
                                     + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
-                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2  input-sm'   multiple='multiple'  name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "][]' " + requiredVal + " >"
+                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2  input-sm'   multiple='multiple'  name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['id'] + "][]' " + requiredVal + " >"
                                     + "</select></div></div></div>"
                                 );
                             } else if (data[i]['attrs'][j]['input_type'] == 'enumeration') {
@@ -1955,7 +1955,7 @@
                                     + "<div class=\"col-sm-8\" >"
                                     + "<div class=\"input-group\">"
                                     + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
-                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2 input-sm enumeration_options'   multiple='multiple'  name='attr_text_enumeration[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "][]' " + requiredVal + " >"
+                                    + "<select value='' id='attr_text_" + j + "' class='form-control select2 input-sm enumeration_options'   multiple='multiple'  name='attr_text_enumeration[" + data[i]['id'] + "][" + data[i]['attrs'][j]['id'] + "][]' " + requiredVal + " >"
                                     + "</select></div></div></div>"
                                 );
                                 $('.select2').select2();
@@ -1984,7 +1984,7 @@
                                     + "<div class=\"col-sm-8\">"
                                     + "<div class=\"input-group\">"
                                     + " <span class=\"input-group-addon\"><i class=\"fa fa-pencil fa-fw\"></i></span>"
-                                    + "<input type='text' value='' id='attr_text_" + j + "' class='form-control input-sm' name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['attr_id'] + "]' " + requiredVal + " >"
+                                    + "<input type='text' value='' id='attr_text_" + j + "' class='form-control input-sm' name='attr_text[" + data[i]['id'] + "][" + data[i]['attrs'][j]['id'] + "]' " + requiredVal + " >"
                                     + "</div></div></div>"
                                 );
                             }

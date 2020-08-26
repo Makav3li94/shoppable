@@ -167,6 +167,7 @@ Get image
                     $table->string('alias', 120)->unique();
                     $table->tinyInteger('sort')->default(0);
                     $table->tinyInteger('status')->default(0);
+                    $table->date('publish_date')->nullable();
                     $table->timestamp('created_at')->nullable();
                     $table->timestamp('updated_at')->nullable();
                 });

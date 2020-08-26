@@ -16,6 +16,7 @@ if(sc_config('Content')) {
                 ->name('cms.category');
             Route::get('/'.$prefixCmsEntry.'/{alias}'.$suffix, 'ContentController@content')
                 ->name('cms.content');
+            Route::get('/cms.html', 'ContentController@index')->name('cms.index');
         });
 }
 

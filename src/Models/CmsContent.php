@@ -28,6 +28,11 @@ class CmsContent extends Model
     {
         return $this->hasMany(CmsContentDescription::class, 'cms_content_id', 'id');
     }
+
+    public function description(){
+        return $this->descriptions()->where('lang',app()->getLocale());
+    }
+
     public function images()
     {
         return $this->hasMany(CmsImage::class, 'content_id', 'id');
